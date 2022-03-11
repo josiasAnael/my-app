@@ -1,0 +1,18 @@
+.abs-center {
+    align-items: center;
+    justify-content: center;
+ 
+  }
+
+.box {
+    background-color: var(--box-bg);
+    padding: 5px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+
+.header {
+  margin-bottom: 30px;
+  text-align: center;
+}
