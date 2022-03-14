@@ -1,17 +1,16 @@
-import React from "react";
+import React, {Component} from "react";
+import { render } from "react-dom";
 
 import { Split, Line } from '../../components/Layout/styles/Split';
 
-import './pdf/dataTables.bulma.min.js'
-import './pdf/jquery.dataTables.min.js'
+import {Tbl} from './Tbl.jsx'
 
-import './pdf/dataTables.bulma.min.css'
-import './pdf/bulma.min.css'
+const dataSet = [
+  [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800" ],
+  ]
 
-
-export const Students = () => {
-  
-    return(
+export const Students = () => {  
+  return(
       <Split >
        <form action="#" className="p-3 form">
         <div className="container">
@@ -29,17 +28,17 @@ export const Students = () => {
                 
                 <div className="form-group">
                   <label htmlFor="inputlg">Corrreo</label>
-                  <input type="text" placeholder="Correo" className="form-control input-lg" id="inputlg"/>
+                  <input type="text" placeholder="Correo" className="form-control input-lg" id="Correo" />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="inputlg">Corrreo</label>
-                  <input type="password" placeholder="Correo" className="form-control input-lg" id="inputlg"/>
+                  <label htmlFor="inputlg">Contraseña</label>
+                  <input type="password" placeholder="Contraseña" className="form-control input-lg" id="password1"/>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="inputlg">Confirmar contraseña</label>
-                  <input type="password" placeholder="Correo" className="form-control input-lg" id="inputlg"/>
+                  <input type="password" placeholder="Contraseña" className="form-control input-lg" id="password2"/>
                 </div>
 
 
@@ -69,43 +68,15 @@ export const Students = () => {
               </div>
               <div className="col-12 col-sm-6 col-md-6 col-xl-6">
               <h1>Alumnos</h1>
-              <table id="alumno" className="table is-striped" style={{width:'100%'}}>
-                  <thead>
-                      <tr>
-                          <th>Name</th>
-                          <th>Position</th>
-                          <th>Office</th>
-                          <th>Age</th>
-                          <th>Start date</th>
-                          <th>Salary</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                      </tr>
-                      <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                      </tr>
-                    </tbody>
-                </table>
+              <Tbl />
+           
               </div>
           </div>
         </div>
       </form>
     </Split>
     );
-    
+
 };
 
 export default Students;
