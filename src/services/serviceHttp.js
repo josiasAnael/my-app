@@ -3,9 +3,17 @@
 const URL='https://apiunicah.herokuapp.com/api';
 
 
+
+
 export default {
     Get: (url) => {
-        return fetch(`${URL}${url}`)
+        return fetch(`${URL}${url}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+            }
+        })
             .then(response => response.json())
             .catch(error => console.error(error));
     },
@@ -14,7 +22,8 @@ export default {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.cookie.split('=')[1]}`
             },
             body: JSON.stringify(data)
         })
@@ -26,7 +35,8 @@ export default {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.cookie.split('=')[1]}`
             },
             body: JSON.stringify(data)
         })
@@ -38,7 +48,8 @@ export default {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.cookie.split('=')[1]}`
             }
         })
             .then(response => response.json())

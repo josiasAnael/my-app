@@ -3,7 +3,7 @@ const { Post } = data;
 export const login = (data) => {
   return Post('/auth/signin', data).then(res => {
     document.cookie = `token=${res.token}`;
-    console.log(document.cookie);
+
     return res;
   }).catch(err => {
     console.log(err);
@@ -17,7 +17,7 @@ export const fecherUser = () => {
 
   if (document.cookie.includes("token=")) {
     const token = document.cookie.split("token=")[1];
-    console.log('token fecht', token);
+    // console.log('token fecht', token);
     if(!token){
       const error = new Error("Not authorized!");
       error.status = 403;
@@ -34,6 +34,6 @@ export const fecherUser = () => {
 };
 
 export const logOut = () => {
-  console.log('se esta borrando a la verga',  document.cookie);
+  // console.log('se esta borrando a la verga',  document.cookie);
   document.cookie='token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
