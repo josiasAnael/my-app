@@ -26,16 +26,25 @@ import { BsPeople } from "react-icons/bs";
 
 import { ThemeContext } from "./../../pages/Layout";
 import { useLocation } from "react-router-dom";
+import {logOut}from "../../services/authService"
+import {useUser} from "../../context/authcontext";
 
 
 const Sidebar = (props) => {
+
+    const {setUser}=useUser();
     const { setTheme, theme } = useContext(ThemeContext);
     const [sidebarOpen , setSidebarOpen] = useState(true);
     const { pathname } = useLocation();
 
     const [Sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!Sidebar);
-
+    const logOuthandel= () => {
+        
+        logOut();
+        setUser(null);
+        
+    }
     return (
         <>
         <SSidebar isOpen={sidebarOpen}>
@@ -78,7 +87,7 @@ const Sidebar = (props) => {
 
             {secondaryLinksArray.map(({ icon, label }) => (
                 <SLinkContainer key={label}>
-                    <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                    <SLink onClick={logOuthandel} to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
                         <SLinkIcon>{icon}</SLinkIcon>
                         {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
                     </SLink>
@@ -139,7 +148,7 @@ const linksArray = [
 const secondaryLinksArray = [
 
     {
-        label: "Cierra Sesion",
+        label: "Cerrar Sesion",
         icon: <MdLogout />,
     },
 ];

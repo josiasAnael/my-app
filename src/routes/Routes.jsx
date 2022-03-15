@@ -1,13 +1,17 @@
 import React from "react";
 import { Route, Router ,Link} from "react-router-dom";
+import { useUser } from "../context/authcontext";
 import Students from "../pages/alumno";
 import HomePage from "../pages/HomePage/HomePage"
+import Login from "../pages/login";
 
 const Routes = () => {
+    const {token}=useUser();
+    console.log('token', token)
     return (
         <>
             <Route exact path="/">
-                <HomePage />
+                {token ? <HomePage /> : <Login />}
             </Route>
             <Route exact path="/statistics">
             <h1>Statistics Page</h1>
