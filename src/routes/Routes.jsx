@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Route, Router ,Link} from "react-router-dom";
 import { useUser } from "../context/authcontext";
 import Students from "../pages/alumno";
@@ -6,8 +6,12 @@ import HomePage from "../pages/HomePage/HomePage"
 import Login from "../pages/login";
 
 const Routes = () => {
-    const {token}=useUser();
-    console.log('token', token)
+    const {token,setUser}=useUser();
+    useEffect(()=>{
+        if(token){
+            setUser(token);
+        }
+    },[token,setUser])
     return (
         <>
             <Route exact path="/">

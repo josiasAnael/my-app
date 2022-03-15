@@ -17,7 +17,7 @@ export const fecherUser = () => {
 
   if (document.cookie.includes("token=")) {
     const token = document.cookie.split("token=")[1];
-    console.log('token fecht', token)
+    console.log('token fecht', token);
     if(!token){
       const error = new Error("Not authorized!");
       error.status = 403;
@@ -34,5 +34,6 @@ export const fecherUser = () => {
 };
 
 export const logOut = () => {
-  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  console.log('se esta borrando a la verga',  document.cookie);
+  document.cookie='token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }

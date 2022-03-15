@@ -17,7 +17,7 @@ export const LoginC = () => {
         };
         login(data).then(async (res) => {
             console.log(res);
-            setUser(res.token);
+            setUser();
             window.location.href = '/';
         });
 
@@ -25,7 +25,7 @@ export const LoginC = () => {
  
     return (
         <>
-            {!loading ? <div>Cargando...</div> :
+            
                 <compontL.Loginlimiter limiter>
                     <compontL.containerlogin100 containerlogin100>
                             <compontL.form_title loginformtitle>
@@ -57,7 +57,7 @@ export const LoginC = () => {
                     </compontL.containerlogin100>
                 </compontL.Loginlimiter>
        
-            }
+        
         
         </>
     )

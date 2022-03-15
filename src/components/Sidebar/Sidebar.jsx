@@ -40,7 +40,7 @@ const Sidebar = (props) => {
     const [Sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!Sidebar);
     const logOuthandel= () => {
-        
+
         logOut();
         setUser(null);
         
