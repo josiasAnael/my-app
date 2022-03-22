@@ -1,10 +1,11 @@
 import http from './serviceHttp'
-
-const { Delete,Get,Post,Put } = http;
-
-
-export const getCustomer = (data) => {
-    return Get('/users/',data)
+const {Get,Post} = http;
+export const getCustomer = (url) => {
+    return Get(`${url}`).then(res => {
+        return res;
+    }).catch(err => {
+        console.log(err);
+    })
 }
 
 export const getCustomerById = (id) => {

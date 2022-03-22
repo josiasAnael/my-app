@@ -1,13 +1,8 @@
-
-
-const URL='https://apiunicah.herokuapp.com/api';
-
-
-
+const URL_HOST='https://apiunicah.herokuapp.com/api';
 
 export default {
     Get: (url) => {
-        return fetch(`${URL}${url}`,{
+        return fetch(`${URL_HOST}${url}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,10 +10,10 @@ export default {
             }
         })
             .then(response => response.json())
-            .catch(error => console.error(error));
+            .catch(error => console.error(`${error}`));
     },
     Post: (url, data) => {
-        return fetch(`${URL}${url}`, {
+        return fetch(`${URL_HOST}${url}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -31,7 +26,7 @@ export default {
             .catch(error => console.error(error));
     },
     Put: (url, data) => {
-        return fetch(`${URL}${url}`, {
+        return fetch(`${URL_HOST}${url}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -44,7 +39,7 @@ export default {
             .catch(error => console.error(error));
     },
     Delete: (url) => {
-        return fetch(`${URL}${url}`, {
+        return fetch(`${URL_HOST}${url}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -55,5 +50,5 @@ export default {
             .then(response => response.json())
             .catch(error => console.error(error));
     },
-     fetcher : (...arg) => fetch(...arg).then(r => r.json())
+    fetcher : (...arg) => fetch(...arg).then(r => r.json())
 }

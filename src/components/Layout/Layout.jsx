@@ -4,12 +4,13 @@ import Footer from "../Footer/Footer"
 
 
 import { SLayout, SMain, BodyLayout } from "./styles";
+import { useUser } from "../../context/authcontext";
 
 const Layout = ({ children }) => {
+    // const {token}=useUser()
+
     return (
         <>
-        <>
-        <div  >
             <SLayout>
                 <BodyLayout>
                     <div className="">
@@ -17,13 +18,8 @@ const Layout = ({ children }) => {
                         <Footer/>
                     </div>
                 </BodyLayout>            
-                <Sidebar />
-               
-            
+                <Sidebar/>
             </SLayout>
-        </div>
-        
-        </>
         </>
     );
 };

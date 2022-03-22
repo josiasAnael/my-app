@@ -32,7 +32,7 @@ import {useUser} from "../../context/authcontext";
 
 const Sidebar = (props) => {
 
-    const {setUser}=useUser();
+    const {token,setUser}=useUser();
     const { setTheme, theme } = useContext(ThemeContext);
     const [sidebarOpen , setSidebarOpen] = useState(true);
     const { pathname } = useLocation();
@@ -47,64 +47,68 @@ const Sidebar = (props) => {
     }
     return (
         <>
-        <SSidebar isOpen={sidebarOpen}>
-            
-            <SSidebarButton isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
-                <AiOutlineLeft />
-            </SSidebarButton>
-            
-            {IconUnicah.map(({ label, to }) => (
-                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                                <SLogo>
-                                    <img src={logoSVG} alt="logo" />
-                                </SLogo>
-                        {Sidebar && (
-                            <>       
-                                <SLinkLabel className={Sidebar ?'close' : 'active'}>{label}</SLinkLabel>
-                            </>
-                        )}
-                        </SLink>
-            ) )}
-            
+            {token ?
+                <SSidebar isOpen={sidebarOpen}>
+                    
+                    <SSidebarButton isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
+                        <AiOutlineLeft />
+                    </SSidebarButton>
+                    
+                    {IconUnicah.map(({ label, to }) => (
+                            <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                                        <SLogo>
+                                            <img src={logoSVG} alt="logo" />
+                                        </SLogo>
+                                {Sidebar && (
+                                    <>       
+                                        <SLinkLabel className={Sidebar ?'close' : 'active'}>{label}</SLinkLabel>
+                                    </>
+                                )}
+                                </SLink>
+                    ) )}
+                    
 
 
-            <SDivider />
-            {linksArray.map(({ icon, label, to }) => (
-                <SLinkContainer key={label} isActive={pathname === to}>
-                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                        <SLinkIcon>{icon}</SLinkIcon>
-                        {sidebarOpen && (
-                            <>
-                                <SLinkLabel>{label}</SLinkLabel>
-                             
-                            </>
-                        ) } 
+                    <SDivider />
+                    {linksArray.map(({ icon, label, to }) => (
+                        <SLinkContainer key={label} isActive={pathname === to}>
+                            <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                                <SLinkIcon>{icon}</SLinkIcon>
+                                {sidebarOpen && (
+                                    <>
+                                        <SLinkLabel>{label}</SLinkLabel>
+                                    
+                                    </>
+                                ) } 
 
-                    </SLink>
-                </SLinkContainer>
-            ))}
-            <SDivider />
+                            </SLink>
+                        </SLinkContainer>
+                    ))}
+                    <SDivider />
 
-            {secondaryLinksArray.map(({ icon, label }) => (
-                <SLinkContainer key={label}>
-                    <SLink onClick={logOuthandel} to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                        <SLinkIcon>{icon}</SLinkIcon>
-                        {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
-                    </SLink>
-                </SLinkContainer>
-            ))}
-            <SDivider />
-            
-            <STheme>
-                {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
-                <SThemeToggler
-                    isActive={theme === "dark"}
-                    onClick={() => setTheme((p) => (p === "light" ? "dark" : "light"))}
-                >
-                    <SToggleThumb style={theme === "dark" ? { right: "1px" } : {}} />
-                </SThemeToggler>
-            </STheme>
-        </SSidebar>
+                    {secondaryLinksArray.map(({ icon, label }) => (
+                        <SLinkContainer key={label}>
+                            <SLink onClick={logOuthandel} to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                                <SLinkIcon>{icon}</SLinkIcon>
+                                {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+                            </SLink>
+                        </SLinkContainer>
+                    ))}
+                    <SDivider />
+                    
+                    <STheme>
+                        {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
+                        <SThemeToggler
+                            isActive={theme === "dark"}
+                            onClick={() => setTheme((p) => (p === "light" ? "dark" : "light"))}
+                        >
+                            <SToggleThumb style={theme === "dark" ? { right: "1px" } : {}} />
+                        </SThemeToggler>
+                    </STheme>
+                </SSidebar>
+            : !token
+
+            }
         </>
     );
 };

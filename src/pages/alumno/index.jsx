@@ -1,10 +1,12 @@
-import React from "react";
+import React ,{ useState, useEffect } from "react";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Split, Line } from "../../components/Layout/styles/Split";
 import { ErrorInput } from "./custonError";
 import {useCustomer} from "../../context/customerContext";
-
+import {DataTable} from 'primereact/datatable'
+import { Column } from "primereact/column";
+import axios from 'axios';  
 
 
 const initialValues = {
@@ -56,13 +58,13 @@ export const Students = () => {
     loading,
     data,
   } =useCustomer();
+  // console.log(loading);
 
-  // console.log('data', data)
 
   return (
     <Split>
       <div className="row">
-        <div className="col-sm-12 col-md-6 col-xl-6">
+        <div className="col-sm-12 col-md-4 col-xl-4">
           <Formik
             initialValues={initialValues}
             validate={validar}
@@ -104,7 +106,7 @@ export const Students = () => {
                     type="text"
                     name="identity"
                     placeholder="Identidad"
-                    className="form-control input-sm "
+                    className="form-control input-sm"
                     
                   />
                   
@@ -200,33 +202,27 @@ export const Students = () => {
           </Formik>
         </div>
 
-        <div className="col-sm-12 col-md-6 col-xl-6">
+        <div className="col-sm-12 col-md-8 col-xl-8">
           <h1>Alumnos</h1>
-          <table
-            id="alumno"
-            className="table is-striped"
-            style={{ width: "100%" }}
-          >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>email</th>
-                {/* <th>Office</th> */}
-                <th>identidad</th>
-                <th>Carrera</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&  data.map((customer) => (
-                <tr key={customer.accountnumber}>
-                  <td>{customer.username}</td>
-                  <td>{customer.email}</td>
-                  <td>{customer.accountnumber}</td>
-                  <td>{customer.career}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {!loading?
+            <DataTable
+              value={data}
+              responsiveLayout="scroll"
+              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+              dataKey="id"
+              paginator
+              emptyMessage="No data found."
+              className="datatable-responsive"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} posts"
+              rows={10}
+            >
+                <Column field="accountnumber" sortable header="Cuenta"></Column>
+                <Column field="username" sortable header="Nombre"></Column>
+                <Column field="career" sortable header="Carrera"></Column>
+                <Column field="createdAt" sortable header="Creado"></Column>
+            </DataTable>:
+            <h1>Cargando</h1>
+          }
         </div>
       </div>
     </Split>

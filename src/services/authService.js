@@ -2,8 +2,10 @@ import data from './serviceHttp';
 const { Post } = data;
 export const login = (data) => {
   return Post('/auth/signin', data).then(res => {
-    document.cookie = `token=${res.token}`;
-
+    console.log(res);
+    if(res.token!=undefined){
+      document.cookie = `token=${res.token}`;
+    }
     return res;
   }).catch(err => {
     console.log(err);
@@ -34,6 +36,6 @@ export const fecherUser = () => {
 };
 
 export const logOut = () => {
-  // console.log('se esta borrando a la verga',  document.cookie);
   document.cookie='token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
 }
