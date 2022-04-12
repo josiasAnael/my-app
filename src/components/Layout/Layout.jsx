@@ -2,25 +2,29 @@ import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer/Footer"
 
-
 import { SLayout, SMain, BodyLayout } from "./styles";
 import { useUser } from "../../context/authcontext";
 
-const Layout = ({ children }) => {
-    // const {token}=useUser()
+import Login from '../../pages/login';
+
+export const Layout = ({ children }) => {
+    const {token,setUser}=useUser();
 
     return (
         <>
+        {/* validar las rutas con el token */}
+        {
             <SLayout>
-                <BodyLayout>
-                    <div className="">
-                        <SMain>{children} </SMain>
-                        <Footer/>
-                    </div>
-                </BodyLayout>            
-                <Sidebar/>
+            <BodyLayout>
+                <div className="">            
+                    <SMain>{children} </SMain> 
+                </div>
+            </BodyLayout>
+            <Sidebar />
             </SLayout>
+        }
         </>
+    
     );
 };
 

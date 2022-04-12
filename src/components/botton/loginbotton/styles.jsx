@@ -16,14 +16,14 @@ export const Container100_btn= styled.div`
 
 export const Btn = styled.button`
 ${({primary})=> primary && css`
-    font-family: Ubuntu-Bold;
+    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     color: #fff;
     line-height: 1.2;
     text-transform: uppercase;
     cursor: pointer;
     
-    margin-top: 32px;
+    margin-top: 60px;
     outline: none !important;
     border: none;
     background: transparent;
@@ -38,16 +38,12 @@ ${({primary})=> primary && css`
     padding: 0 20px;
     min-width: 160px;
     height: 42px;
-    border-radius: 21px;
+    border-radius: 10px;
 
-    background: #2e18d4;
-    background: -webkit-linear-gradient(left, #459ab2, #188cd4, #424bfa);
-    background: -o-linear-gradient(left, #459ab2, #188cd4, #424bfa);
-    background: -moz-linear-gradient(left, #459ab2, #188cd4, #424bfa);
-    background: linear-gradient(left, #459ab2, #188cd4, #424bfa);
-    position: relative;
+     position: relative;
     z-index: 1;
-
+    background-color: #004CBE;
+ 
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -63,9 +59,13 @@ ${({primary})=> primary && css`
   z-index: -1;
   width: 100%;
   height: 100%;
-  border-radius: 21px;
-  background-color: #296294;
- 
+  border-radius: 10px;
+  background: #2e18d4;
+    background: -webkit-linear-gradient(left, #1f7f9a, #196ea2, #004CBE);
+    background: -o-linear-gradient(left, #1f7f9a, #196ea2, #004CBE);
+    background: -moz-linear-gradient(left, #1f7f9a, #196ea2, #004CBE);
+    background: linear-gradient(left, #1f7f9a, #196ea2, #004CBE);
+
   top: 0;
   left: 0;
   opacity: 0;

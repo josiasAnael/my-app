@@ -86,6 +86,7 @@ export const STheme = styled.div`
     align-items: center;
     font-size: 16px;
 `;
+
 export const SThemeLabel = styled.span`
     display: block;
     flex: 1;
@@ -117,7 +118,6 @@ export const SToggleThumb = styled.div`
 
 export const SSidebar = styled.div`
     width: ${({ isOpen }) => (!isOpen ? `100px` : `360px`)};
-    
     padding: ${v.lgSpacing};
     position: relative;
     background: ${({ theme }) => theme.bg};

@@ -22,7 +22,7 @@ const validar = (values) => {
   if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "Las contraseñas no coinciden";
   }
-  if (!values.name) {
+  if (!values.name) {                                                                                                                                                            
     errors.name = "El nombre es requerido";
   }
   // valirar si la identidad es valido
@@ -74,7 +74,7 @@ export const Students = () => {
               <Form>
                 <h1>Alumno</h1>
                 <div className="form-group">
-                  <label htmlFor="name">Nombre</label>
+                  <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
                   <Field
                     type="text"
                     name="name"
@@ -87,7 +87,7 @@ export const Students = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email" style={{fontSize:"'Roboto', sans-serif" }}>Email</label>
                   <Field
                     type="email"
                     name="email"
@@ -101,7 +101,7 @@ export const Students = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="identity">Identidad</label>
+                  <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
                   <Field
                     type="text"
                     name="identity"
@@ -116,7 +116,7 @@ export const Students = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password">Contraseña</label>
+                  <label htmlFor="password" style={{fontSize:"'Roboto', sans-serif" }}>Contraseña</label>
                   <Field
                     type="password"
                     name="password"
@@ -130,7 +130,7 @@ export const Students = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+                  <label htmlFor="confirmPassword" style={{fontSize:"'Roboto', sans-serif" }}>Confirmar Contraseña</label>
                   <Field
                     type="password"
                     name="confirmPassword"
@@ -138,72 +138,63 @@ export const Students = () => {
                     className="form-control input-sm"
                   />
 
-                  <ErrorMessage
-                    name="confirmPassword"
-                    component={() => (
+                  <ErrorMessage name="confirmPassword" component={() => (
                       <ErrorInput error={errors.confirmPassword} />
                     )}
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="cars">Carreras</label>
-                  <Field
-                    component="select"
-                    name="cars"
-                    className="form-control input-sm"
+                <div className="form-group" >
+                  <label htmlFor="cars" style={{fontSize:"'Roboto', sans-serif" }}>Carreras</label>
+                  <Field component="select" name="cars" className="form-control input-sm"
                   >
-                    <option value="" disabled>
+                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
                       Seleccione una carrera
                     </option>
                     <optgroup label="Ingenierias">
-                      <option value="Computacion">
+                      <option value="Computacion" style={{fontSize:"'Roboto', sans-serif" }}>
                         Ciencias de la Computacion
                       </option>
-                      <option value="Administracion">
+                      <option value="Administracion" style={{fontSize:"'Roboto', sans-serif" }}>
                         Adminitración y Gestion Estrategica
                       </option>
-                      <option value="Civil">Civil</option>
+                      <option value="Civil" style={{fontSize:"'Roboto', sans-serif" }}>Civil</option>
                     </optgroup>
                     <optgroup label="Licenciaturas">
-                      <option value="Derecho">Derecho</option>
-                      <option value="Phicologia">Phicologia</option>
-                      <option value="Mercadotecnia">Mercadotecnia</option>
-                      <option value="CirujuaDental">Cirugía Dental</option>
+                      <option value="Derecho" style={{fontSize:"'Roboto', sans-serif" }}>Derecho</option>
+                      <option value="Phicologia" style={{fontSize:"'Roboto', sans-serif" }}>Phicologia</option>
+                      <option value="Mercadotecnia" style={{fontSize:"'Roboto', sans-serif" }}>Mercadotecnia</option>
+                      <option value="CirujuaDental" style={{fontSize:"'Roboto', sans-serif" }}>Cirugía Dental</option>
                     </optgroup>
 
                     <optgroup label="Doctorado">
-                      <option value="Medicina">Medicina</option>
+                      <option value="Medicina" style={{fontSize:"'Roboto', sans-serif" }}>Medicina</option>
                     </optgroup>
                   </Field>
 
-                  <ErrorMessage
-                    name="cars"
-                    component={() => <ErrorInput error={errors.cars} />}
-                  />
+                  <ErrorMessage name="cars" component={() => <ErrorInput error={errors.cars} />} />
+                </div>
+                
+                <div className="row">
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-6">
+                    <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid} style={{backgroundColor:"#004CBE" }}>
+                      ENVIAR 
+                    </button>
+                
+          
+                    <button type="reset" className="btn btn-warning" onClick={resetForm} style={{fontSize:"'Roboto', sans-serif" }}>
+                      LIMPIAR
+                    </button>
+                    
+                  </div>
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting || !isValid}
-                >
-                  Submit
-                </button>
-
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={resetForm}
-                >
-                  Limpiar
-                </button>
               </Form>
             )}
           </Formik>
         </div>
 
         <div className="col-sm-12 col-md-8 col-xl-8">
-          <h1>Alumnos</h1>
+          <h1 style={{fontSize:"'Roboto', sans-serif" }}>Alumnos</h1>
           {!loading?
             <DataTable
               value={data}
@@ -221,7 +212,7 @@ export const Students = () => {
                 <Column field="career" sortable header="Carrera"></Column>
                 <Column field="createdAt" sortable header="Creado"></Column>
             </DataTable>:
-            <h1>Cargando</h1>
+            <h1>Cargando...</h1>
           }
         </div>
       </div>

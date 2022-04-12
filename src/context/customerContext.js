@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import {getCustomer} from "../services/customerServices";
+import {getCustomer, createCustomers, updateCustomers} from "../services/customerServices";
 
 export const useCustomer=()=>{
     const {data ,error ,isValidating} = useSWR('/users',getCustomer);
@@ -10,3 +10,23 @@ export const useCustomer=()=>{
     }
 
 }
+
+export const createCustomer=()=>{
+    const {data ,error ,isValidating} = useSWR('/users/createCustomer',createCustomer);
+    return {
+        loading:!data || isValidating,
+        error,
+        data,
+    }
+}
+
+export const UpdateCustomer=()=>{
+    const {data ,error ,isValidating} = useSWR('/users/updateCustomer',updateCustomers);
+    return {
+        loading:!data || isValidating,
+        error,
+        data,
+    }
+}
+
+{/* actualizar la contraseña del usuario logeado */}

@@ -3,15 +3,8 @@ import { LoginC } from '../../components/login'
 import React, { Component } from 'react';
 
 function Login() {
-
-
-  
   return (
-    
       <LoginC />
-       
-      
-   
   );
 }
 

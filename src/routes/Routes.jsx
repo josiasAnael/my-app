@@ -1,9 +1,11 @@
 import React,{useEffect} from "react";
-import { Route, Router ,Link} from "react-router-dom";
+import { Route, BrowserRouter as Router ,Link} from "react-router-dom";
 import { useUser } from "../context/authcontext";
 import Students from "../pages/alumno";
 import HomePage from "../pages/HomePage/HomePage"
 import Login from "../pages/login";
+import Dashboard from "../pages/dashboard";
+import Perfil from "../pages/perfil";
 
 const Routes = () => {
     const {token,setUser}=useUser();
@@ -14,18 +16,25 @@ const Routes = () => {
     },[token,setUser])
     return (
         <>
-            <Route exact path="/">
-                {token ? <HomePage /> : <Login />}
-            </Route>
-            <Route exact path="/statistics">
-            <h1>Statistics Page</h1>
-            </Route>
-            <Route exact path="/customers">
-                <Students/>
-            </Route>
-            <Route exact path="/diagrams">
-                <h1>Diagrams Page</h1>
-            </Route>
+            {/* validar las rutas con el token */}
+            {token?
+            <>
+                <Route exact path="/home">
+                    <HomePage />
+                </Route>
+                <Route exact path="/statistics">
+                    <Dashboard />       
+                </Route>
+                <Route exact path="/customers">
+                    <Students />
+                </Route>
+                <Route exact path="/perfil">
+                    <Perfil />
+                </Route>
+                </>
+            :
+            <Login setUser={useUser} />   
+        }
         </>
     );
 };

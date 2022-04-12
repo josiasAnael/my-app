@@ -5,13 +5,16 @@ import Layout from "../../components/Layout/Layout";
 import Routes from "../../routes/Routes";
 import { GlobalStyle } from '../../components/Layout/styles/globalStyles';
 import { darkTheme, lightTheme } from "../../components/Layout/styles/theme";
+import Login from "../login";
+
+import { useUser } from "../../context/authcontext";
 
 
 export const ThemeContext = React.createContext(null);
-
 export const LayoutC = () => {
     const [theme, setTheme] = useState("light");
     const themeStyle = theme === "light" ? lightTheme : darkTheme;
+    const {token,setUser}=useUser();
 
     return (
         <ThemeContext.Provider value={{ setTheme, theme }}>
@@ -27,9 +30,14 @@ export const LayoutC = () => {
                     />
                 </Helmet>
                 <>
-                    <Layout>
-                        <Routes />
-                    </Layout>
+                    {
+
+                        <Layout>
+                            <Routes />
+                        </Layout>
+                       
+                    }
+                    
                 </>
             </ThemeProvider>
         </ThemeContext.Provider>

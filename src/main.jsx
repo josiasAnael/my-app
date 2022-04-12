@@ -24,7 +24,6 @@ ReactDOM.render(
     <SWRConfig value={{fetcher:fetcher}}>
 
       <Router>
-        
         <LayoutC/>
       </Router>
 

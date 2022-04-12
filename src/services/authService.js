@@ -1,5 +1,6 @@
 import data from './serviceHttp';
 const { Post } = data;
+
 export const login = (data) => {
   return Post('/auth/signin', data).then(res => {
     console.log(res);
