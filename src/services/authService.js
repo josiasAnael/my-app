@@ -3,7 +3,6 @@ const { Post } = data;
 
 export const login = (data) => {
   return Post('/auth/signin', data).then(res => {
-    console.log(res);
     if(res.token!=undefined){
       document.cookie = `token=${res.token}`;
     }
@@ -17,7 +16,6 @@ export const register = (data) => Post('/auth/signup', data);
 
 
 export const fecherUser = () => {
-
   if (document.cookie.includes("token=")) {
     const token = document.cookie.split("token=")[1];
     // console.log('token fecht', token);
@@ -27,7 +25,7 @@ export const fecherUser = () => {
       throw error;
     }
     return {
-        token: document.cookie.split("token=")[1],
+        token
     }
   }
   // not authorized

@@ -7,6 +7,8 @@ import {useCustomer} from "../../context/customerContext";
 import {DataTable} from 'primereact/datatable'
 import { Column } from "primereact/column";
 import axios from 'axios';  
+import { useUser } from "../../context/authcontext";
+import { Navigate } from "react-router-dom";
 
 
 const initialValues = {
@@ -58,8 +60,6 @@ export const Students = () => {
     loading,
     data,
   } =useCustomer();
-  // console.log(loading);
-
 
   return (
     <Split>

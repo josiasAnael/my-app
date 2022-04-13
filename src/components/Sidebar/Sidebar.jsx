@@ -1,143 +1,155 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState,useContext } from "react";
 import {
-    SDivider,
-    SLink,
-    SLinkContainer,
-    SLinkIcon,
-    SLinkLabel,
-    SLogo,
-    SSidebar,
-    SSidebarButton,
-    STheme,
-    SThemeLabel,
-    SThemeToggler,
-    SToggleThumb,
+  SDivider,
+  SLink,
+  SLinkContainer,
+  SLinkIcon,
+  SLinkLabel,
+  SLogo,
+  SSidebar,
+  SSidebarButton,
+  STheme,
+  SThemeLabel,
+  SThemeToggler,
+  SToggleThumb,
 } from "./styles";
 
 import { logoSVG } from "../../assets/";
 
 import {
-    AiOutlineApartment,
-    AiOutlineHome,
-    AiOutlineLeft,
+  AiOutlineHome,
+  AiOutlineLeft,
 } from "react-icons/ai";
 import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
 import { BsPeople, BsPersonFill } from "react-icons/bs";
 
 import { ThemeContext } from "./../../pages/Layout";
 import { useLocation } from "react-router-dom";
-import {logOut}from "../../services/authService"
-import {useUser} from "../../context/authcontext";
-import { LoginC } from "../login";
+import { logOut } from "../../services/authService";
+import { useUser } from "../../context/authcontext";
 
+export const Sidebar = () => {
+  const {  setUser } = useUser();
+  const { setTheme, theme } = useContext(ThemeContext);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const location = useLocation();
+    
+  const [Sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!Sidebar);
+  const logOuthandel = () => {
+    logOut();
+    setUser({}).then((v) => {
+      console.log('token value', v)
+    });
+  };
+  return (
+    <>
+      {
+        <SSidebar isOpen={sidebarOpen}>
+          <SSidebarButton
+            isOpen={sidebarOpen}
+            onClick={showSidebar}
+          >
+            <AiOutlineLeft />
+          </SSidebarButton>
 
-export const Sidebar = (props) => {
-    const { token, setUser } = useUser();
-    const { setTheme, theme } = useContext(ThemeContext);
-    const [sidebarOpen , setSidebarOpen] = useState(true);
-    const { pathname } = useLocation();
+          {IconUnicah.map(({ label, to }) => (
+            <SLink
+              key={label}
+              to={to}
+              style={!sidebarOpen ? { width: `fit-content` } : {}}
+            >
+              <SLogo>
+                <img src={logoSVG} alt="logo" />
+              </SLogo>
+              {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+            </SLink>
+          ))}
 
-    const [Sidebar, setSidebar] = useState(false);
-    const showSidebar = () => setSidebar(!Sidebar);
-    const logOuthandel= () => {
+          <SDivider />
+          {linksArray.map(({ icon, label, to }) => (
+            <SLinkContainer key={label} isActive={location.pathname === to}>
+              <SLink
+                to={to}
+                style={!sidebarOpen ? { width: `fit-content` } : {}}
+              >
+                <SLinkIcon>{icon}</SLinkIcon>
+                {sidebarOpen && (
+                  <>
+                    <SLinkLabel>{label}</SLinkLabel>
+                  </>
+                )}
+              </SLink>
+            </SLinkContainer>
+          ))}
+          <SDivider />
+          {secondaryLinksArray.map(({ icon, label }) => (
+            <SLinkContainer key={label}>
+              <SLink
+                onClick={logOuthandel}
+                to="/"
+                style={!sidebarOpen ? { width: `fit-content` } : {}}
+              >
+                <SLinkIcon>{icon}</SLinkIcon>
+                {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+              </SLink>
+            </SLinkContainer>
+          ))}
+          <SDivider />
 
-        logOut();
-        setUser(null);
-        
-    }
-    return (
-        <> 
-            {
-                <SSidebar isOpen={sidebarOpen}>
-                    <SSidebarButton isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
-                        <AiOutlineLeft />
-                    </SSidebarButton>
-                    
-                    {IconUnicah.map(({ label, to }) => (
-                        <SLink key={label} to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                            <SLogo>
-                                <img src={logoSVG} alt="logo" />
-                            </SLogo>
-                            {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
-                        </SLink>
-                    ))}
-                    
-                    <SDivider />
-                    {linksArray.map(({ icon, label, to }) => (
-                        <SLinkContainer key={label} isActive={pathname === to}>
-                            <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                                <SLinkIcon>{icon}</SLinkIcon>
-                                {sidebarOpen && (
-                                    <>
-                                        <SLinkLabel>{label}</SLinkLabel>
-                                    
-                                    </>
-                                ) } 
-                            </SLink>
-                        </SLinkContainer>
-                    ))}
-                    <SDivider />
-                        {secondaryLinksArray.map(({ icon, label }) => (
-                            <SLinkContainer key={label}> 
-                                <SLink onClick={logOuthandel} to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
-                                    <SLinkIcon>{icon}</SLinkIcon>
-                                    {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
-                                </SLink>
-                            </SLinkContainer>
-                        ))}
-                    <SDivider />
-                    
-                    <STheme>
-                        {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
-                        <SThemeToggler
-                            isActive={theme === "dark"}
-                            onClick={() => setTheme((p) => (p === "light" ? "dark" : "light"))}
-                        >
-                            <SToggleThumb style={theme === "dark" ? { right: "1px" } : {}} />
-                        </SThemeToggler>
-                    </STheme>
-                </SSidebar>  
-            }
-        </>
-    );
+          <STheme>
+            {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
+            <SThemeToggler
+              isActive={theme === "dark"}
+              onClick={() =>
+                setTheme((p) => (p === "light" ? "dark" : "light"))
+              }
+            >
+              <SToggleThumb style={theme === "dark" ? { right: "1px" } : {}} />
+            </SThemeToggler>
+          </STheme>
+        </SSidebar>
+      }
+    </>
+  );
 };
 
-const IconUnicah=[
-    {        
-        icon: <MdLogout />,
-        label: "UNICAH",
-        to: "/home",
-    }
-]
+const IconUnicah = [
+  {
+    icon: <MdLogout />,
+    label: "UNICAH",
+    to: "/",
+  },
+];
 
 const linksArray = [
-    {
-        label: "Documentos",
-        icon: <AiOutlineHome />,
-        to: "/home",
-    },
-    {
-        label: "Graficas",
-        icon: <MdOutlineAnalytics />,
-        to: "/statistics",
-    },
-    {
-        label: "Alumnos",
-        icon: <BsPeople />,
-        to: "/customers",
-    },
-    {
-        label: "Perfil",
-        icon: <BsPersonFill />,
-        to: "/perfil",
-    },
+  {
+    label: "Documentos",
+    icon: <AiOutlineHome />,
+    to: "/",
+  },
+  {
+    label: "Graficas",
+    icon: <MdOutlineAnalytics />,
+    to: "/statistics",
+  },
+  {
+    label: "Alumnos",
+    icon: <BsPeople />,
+    to: "/customers",
+  },
+  {
+    label: "Perfil",
+    icon: <BsPersonFill />,
+    to: "/perfil",
+  },
 ];
 
 const secondaryLinksArray = [
-    {
-        label: "Cerrar Sesion",
-        icon: <MdLogout />,
-    },
+  {
+    label: "Cerrar Sesion",
+    icon: <MdLogout />,
+  },
 ];
 
 export default Sidebar;

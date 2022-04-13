@@ -3,6 +3,7 @@ import {getCustomer, createCustomers, updateCustomers} from "../services/custome
 
 export const useCustomer=()=>{
     const {data ,error ,isValidating} = useSWR('/users',getCustomer);
+
     return {
         loading:!data || isValidating,
         error,

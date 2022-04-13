@@ -3,10 +3,11 @@ import  {Loginbt} from '../botton/loginbotton'
 import { login } from '../../services/authService.js';
 
 import {useUser} from '../../context/authcontext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const LoginC = () => {
-
-    const {loading,setUser} = useUser();
+    let navigate = useNavigate();
+    const {loading,token,setUser} = useUser();
 
     const onsubmit = (e) => {
         e.preventDefault();
@@ -15,16 +16,20 @@ export const LoginC = () => {
             accountnumber: form.username.value,
             password: form.password.value,
         };
-        login(data).then(async (res) => {
+        login(data).then((res) => {
             console.log(res);
-            setUser();
-            window.location.href = '/home';
+            if(res){
+                setUser({token:res.token}).then((token) => {
+                    console.log('token', token)
+                    navigate('/');
+                });
+            }
+        }).catch ((err) => {
+            console.log(err);
         });
     }
- 
     return (
         <>
-            
             <compontL.Loginlimiter limiter>
                 <compontL.containerlogin100 containerlogin100>
                         <compontL.form_title loginformtitle>
