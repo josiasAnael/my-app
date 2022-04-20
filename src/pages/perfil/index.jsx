@@ -52,21 +52,23 @@ export const Perfil =() => {
                 <Form className="container form-group">
                     {!loading?
                     <div className="form-group">
+                        <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad: </label>
+                    </div>
+                    :<div style={{fontSize:"'Roboto', sans-serif" }}>Cargando Identidad...</div>}
+                    
+                    {!loading?
+                    <div className="form-group">
                         <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre: </label>
-                        <label className="form-control" style={{fontSize:"'Roboto', sans-serif" }}>{data.name}</label>" 
+                        <label className="form-control" style={{fontSize:"'Roboto', sans-serif" }}>{data.name}</label>
                      </div>
                      :<div style={{fontSize:"'Roboto', sans-serif" }}>Cargando Nombre...</div>}
                     {!loading?
                     <div className="form-group"> 
                         <label htmlFor="email" style={{fontSize:"'Roboto', sans-serif" }}>Email: </label>
-                        <label className="form-control" style={{fontSize:"'Roboto', sans-serif" }}>{data.email}</label>"
+                        <label className="form-control" style={{fontSize:"'Roboto', sans-serif" }}>{data.email}</label>
                     </div>
                     :<div style={{fontSize:"'Roboto', sans-serif" }}>Cargando Email...</div>}
-                    {!loading?
-                    <div className="form-group">
-                        <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad: </label>
-                    </div>
-                    :<div style={{fontSize:"'Roboto', sans-serif" }}>Cargando Identidad...</div>}
+                    
                     
                     <div className="form-group">
                         <label htmlFor="password" style={{fontSize:"'Roboto', sans-serif" }}>Contraseña: </label>

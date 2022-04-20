@@ -1,19 +1,17 @@
 import useSWR from "swr";
-import {getCustomer, createCustomers, updateCustomers} from "../services/customerServices";
+import {getCustomer, createCustomers, updateCustomers, deleteCustomer} from "../services/customerServices";
 
 export const useCustomer=()=>{
     const {data ,error ,isValidating} = useSWR('/users',getCustomer);
-
     return {
         loading:!data || isValidating,
         error,
         data,
     }
-
 }
 
 export const createCustomer=()=>{
-    const {data ,error ,isValidating} = useSWR('/users/createCustomer',createCustomer);
+    const {data ,error ,isValidating} = useSWR('/users/createUser',createCustomer);
     return {
         loading:!data || isValidating,
         error,
@@ -22,7 +20,7 @@ export const createCustomer=()=>{
 }
 
 export const UpdateCustomer=()=>{
-    const {data ,error ,isValidating} = useSWR('/users/updateCustomer',updateCustomers);
+    const {data ,error ,isValidating} = useSWR('/users/updateUser',updateCustomers);
     return {
         loading:!data || isValidating,
         error,
@@ -30,4 +28,21 @@ export const UpdateCustomer=()=>{
     }
 }
 
-{/* actualizar la contraseña del usuario logeado */}
+/// actualizar la contraseña del usuario logeado
+export const UpdatePassword=()=>{
+    const {data ,error ,isValidating} = useSWR('/users/updatePassword',updateCustomers);
+    return {
+        loading:!data || isValidating,
+        error,
+        data,
+    }
+}
+
+export const deleteCustomer=()=>{
+    const {data ,error ,isValidating} = useSWR('/users/deleteUser ',deleteCustomer);
+    return {
+        loading:!data || isValidating,
+        error,
+        data,
+    }
+}

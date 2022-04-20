@@ -37,3 +37,12 @@ export const updateCustomersState = (data) => {
         console.log(err);
     })
 }
+
+//detele customer
+export const deleteCustomer = (id) => {
+    return Delete( `${url}/deleteUser/${id}`).then(res => {
+        return res;
+    }).catch(err => {
+        console.log(err);
+    })
+}

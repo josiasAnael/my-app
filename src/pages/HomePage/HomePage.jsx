@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-
 import "../HomePage/Homepage.css";
 import DropFileInput from "../../components/file_drop/";
-
 import { Split, Line } from "../../components/Layout/styles/Split";
-
 import { Formik, Field, Form, ErrorMessage } from "formik";
-
 import { useCustomer } from "../../context/customerContext";
 
 {
@@ -44,9 +40,9 @@ export const HomePage = () => {
   const [file, setFile] = useState(null);
   const onFileChange = (files) => {
     setFile(files[0]);
-    setFileName(files[0].name);
-    setFileSize(files[0].size);
-    setFileType(files[0].type);
+    //setFileName(files[0].name);
+    //setFileSize(files[0].size);
+    //setFileType(files[0].type);
   };
 
   const onSubmit = (e) => {

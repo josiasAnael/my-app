@@ -73,7 +73,7 @@ export const DropFileInput = props => {
                 (fileList.length > 0 && fileList.length <= 1) ? (
                     <div className="drop-file-preview">
                         <p className="drop-file-preview__title">
-                            Lista para subir
+                            Listo para subir
                         </p>
                         {
                             fileList.map((item, index) => (
