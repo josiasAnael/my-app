@@ -3,11 +3,7 @@ import "../HomePage/Homepage.css";
 import DropFileInput from "../../components/file_drop/";
 import { Split, Line } from "../../components/Layout/styles/Split";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useCustomer } from "../../context/customerContext";
 
-{
-  /* Validar si el DropFileInput esta vacio*/
-}
 const validar = (values) => {
   let errors = {};
   if (!values.file) {
@@ -15,13 +11,7 @@ const validar = (values) => {
   }
   return errors;
 };
-const onSubmit = (values, { setSubmitting }) => {
-  alert(JSON.stringify(values, null, 2));
-  console.log("values", values);
-  setTimeout(() => {
-    setSubmitting(false);
-  }, 400);
-};
+
 const datos = {
   fileopening: "DATOS PARA APERTURAR EXPEDIENTE",
   residentialrecord: "FICHA DE INFORMACION REFERENCIAL",
@@ -34,20 +24,22 @@ const datos = {
   collegetitle: "COPIA DE TITULO DE COLEGIO",
   acceptanceletter: "CARTA DE ACEPTACION DE PRÁCTICA",
 };
-
+let data = [];
 export const HomePage = () => {
   //obtener el documento para enviarlo
-  const [file, setFile] = useState(null);
-  const onFileChange = (files) => {
-    setFile(files[0]);
-    //setFileName(files[0].name);
-    //setFileSize(files[0].size);
-    //setFileType(files[0].type);
+  const onFileChange = (value, datos) => {
+    console.log("datos", datos);
+    console.log("data", data.length);
+    console.table(data);
+    let temdata = data.find((item) => item.name === datos);
+    if (temdata) {
+      console.log('temdata', temdata)
+      return value.length > 0?temdata.file = value[0]:data.pop(temdata);
+    }
+    data.push({ name: datos, file: value[0] });
   };
 
   const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(file);
   };
 
   return (
@@ -59,12 +51,17 @@ export const HomePage = () => {
               <div className="abs-center">
                 <div className="row justify-content-center">
                   {Object.keys(datos).map((key, index) => (
-                    <div key={index} className="col-12 col-sm-6 col-md-4 col-xl-3">
+                    <div
+                      key={index}
+                      className="col-12 col-sm-6 col-md-4 col-xl-3"
+                    >
                       <div className="form-group">
                         <div className="box">
                           <label className="header">{datos[key]}</label>
                           <DropFileInput
-                            onFileChange={(files) => onFileChange(files)}
+                            onFileChange={(files) =>
+                              onFileChange(files, datos[key])
+                            }
                             name={key}
                           />
                         </div>

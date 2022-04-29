@@ -1,14 +1,13 @@
 import React ,{ useState, useEffect } from "react";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Split, Line } from "../../components/Layout/styles/Split";
+import { Split } from "../../components/Layout/styles/Split";
 import { ErrorInput } from "./custonError";
 import {useCustomer} from "../../context/customerContext";
+
+// importar data table 
 import {DataTable} from 'primereact/datatable'
 import { Column } from "primereact/column";
-import axios from 'axios';  
-import { useUser } from "../../context/authcontext";
-import { Navigate } from "react-router-dom";
 
 
 const initialValues = {
@@ -200,17 +199,19 @@ export const Students = () => {
               value={data}
               responsiveLayout="scroll"
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              dataKey="id"
               paginator
-              emptyMessage="No data found."
-              className="datatable-responsive"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} posts"
+              emptyMessage="No hay datos"
+              size="large"
+              scrollable scrollHeight="flex"
               rows={10}
             >
                 <Column field="accountnumber" sortable header="Cuenta"></Column>
                 <Column field="username" sortable header="Nombre"></Column>
                 <Column field="career" sortable header="Carrera"></Column>
-                <Column field="createdAt" sortable header="Creado"></Column>
+                <Column field="createdAt" sortable header="Creado" body={(data)=>{
+                  let date = Date.parse(data.createdAt);
+                  return Intl.DateTimeFormat('es-ES', {year: 'numeric', month: 'long', day: '2-digit'}).format(date)
+                }}></Column>
             </DataTable>:
             <h1>Cargando...</h1>
           }

@@ -31,11 +31,13 @@ import { useUser } from "../../context/authcontext";
 export const Sidebar = () => {
   const {  setUser } = useUser();
   const { setTheme, theme } = useContext(ThemeContext);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
     
-  const [Sidebar, setSidebar] = useState(false);
-  const showSidebar = () => setSidebar(!Sidebar);
+  const [Sidebar, setSidebar] = useState(true);
+  const showSidebar = () => {
+    setSidebar(!Sidebar);
+    console.log('Sidebar', Sidebar);
+  }
   const logOuthandel = () => {
     logOut();
     setUser({}).then((v) => {
@@ -45,9 +47,9 @@ export const Sidebar = () => {
   return (
     <>
       {
-        <SSidebar isOpen={sidebarOpen}>
+        <SSidebar isOpen={Sidebar}>
           <SSidebarButton
-            isOpen={sidebarOpen}
+            isOpen={Sidebar}
             onClick={showSidebar}
           >
             <AiOutlineLeft />
@@ -57,12 +59,12 @@ export const Sidebar = () => {
             <SLink
               key={label}
               to={to}
-              style={!sidebarOpen ? { width: `fit-content` } : {}}
+              style={!Sidebar ? { width: `fit-content` } : {}}
             >
               <SLogo>
                 <img src={logoSVG} alt="logo" />
               </SLogo>
-              {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+              {Sidebar && <SLinkLabel>{label}</SLinkLabel>}
             </SLink>
           ))}
 
@@ -71,10 +73,10 @@ export const Sidebar = () => {
             <SLinkContainer key={label} isActive={location.pathname === to}>
               <SLink
                 to={to}
-                style={!sidebarOpen ? { width: `fit-content` } : {}}
+                style={!Sidebar ? { width: `fit-content` } : {}}
               >
                 <SLinkIcon>{icon}</SLinkIcon>
-                {sidebarOpen && (
+                {Sidebar && (
                   <>
                     <SLinkLabel>{label}</SLinkLabel>
                   </>
@@ -88,17 +90,17 @@ export const Sidebar = () => {
               <SLink
                 onClick={logOuthandel}
                 to="/"
-                style={!sidebarOpen ? { width: `fit-content` } : {}}
+                style={!Sidebar ? { width: `fit-content` } : {}}
               >
                 <SLinkIcon>{icon}</SLinkIcon>
-                {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+                {Sidebar && <SLinkLabel>{label}</SLinkLabel>}
               </SLink>
             </SLinkContainer>
           ))}
           <SDivider />
 
           <STheme>
-            {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
+            {Sidebar && <SThemeLabel>Dark Mode</SThemeLabel>}
             <SThemeToggler
               isActive={theme === "dark"}
               onClick={() =>

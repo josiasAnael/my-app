@@ -38,11 +38,3 @@ export const UpdatePassword=()=>{
     }
 }
 
-export const deleteCustomer=()=>{
-    const {data ,error ,isValidating} = useSWR('/users/deleteUser ',deleteCustomer);
-    return {
-        loading:!data || isValidating,
-        error,
-        data,
-    }
-}

@@ -7,7 +7,7 @@ export const SSidebarButton = styled.button`
     ${btnReset};
     position: relative;
     top: ${v.xxlSpacing};
-    right: ${({ isOpen }) => (isOpen ? `30px;` : `40px`)};
+    right: 30px;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -117,7 +117,7 @@ export const SToggleThumb = styled.div`
 
 
 export const SSidebar = styled.div`
-    width: ${({ isOpen }) => (!isOpen ? `100px` : `360px`)};
+    width: ${({ isOpen }) => (!isOpen ? `80px` : `300px`)};
     padding: ${v.lgSpacing};
     position: relative;
     background: ${({ theme }) => theme.bg};
