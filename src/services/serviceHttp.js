@@ -50,5 +50,18 @@ export default {
             .then(response => response.json())
             .catch(error => console.error(error));
     },
-    fetcher : (...arg) => fetch(...arg).then(r => r.json())
+    fetcher : (...arg) => fetch(...arg).then(r => r.json()),
+    uploadFile: (url, data) => {
+        return fetch(`${URL_HOST}${url}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+            },
+            body: data
+        })
+            .then(response => response.json())
+            .catch(error => console.error(error));
+    }
 }
