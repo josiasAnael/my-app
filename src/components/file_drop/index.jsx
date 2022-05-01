@@ -6,7 +6,9 @@ import PropTypes from "prop-types";
 import { ImageConfig } from "./config/ImageConfig";
 import uploadImg from "../../assets/cloud-upload-regular-240.png";
 
-export const DropFileInput = (props) => {
+export const DropFileInput = ({onFileChange,isUploaded}) => {
+  const {pdf} = ImageConfig;
+  console.log('isUploaded', isUploaded)
   var [statusDrag, setstatusDrag] = useState("");
 
   const [fileList, setFileList] = useState([]);
@@ -31,7 +33,7 @@ export const DropFileInput = (props) => {
         const updatedList = [...fileList, newFile];
         if (updatedList.length <= 1) {
           setFileList(updatedList);
-          props.onFileChange(updatedList);
+          onFileChange(updatedList);
         } else {
           alert("Solo puede subir un pdf");
         }
@@ -44,27 +46,37 @@ export const DropFileInput = (props) => {
     updatedList.splice(fileList.indexOf(file), 1);
     setFileList(updatedList);
     
-    props.onFileChange(updatedList);
+    onFileChange(updatedList);
   };
 
   return (
     <>
       <div
         className={`drop-file-input ${statusDrag}`}
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        onDrop={onDrop}
+        onDragEnter={isUploaded?null:onDragEnter}
+        onDragLeave={isUploaded?null:onDragLeave}
+        onDrop={isUploaded?null:onDrop}
+
       >
-        <input
-          type="file"
-          id="file"
-          onChange={onFileDrop}
-          accept="application/pdf"
-        />
-        <div className="drop-file-input__label">
-          <img src={uploadImg} alt="" />
-          <p>Arrastra y suelta tus archivos aquí</p>
-        </div>
+        {isUploaded ? <>
+          <div className="drop-file-input__label" >
+              <img src={pdf} alt="" />
+              <p>Ya fue enviado el archivo</p>
+            </div>  
+        </> : 
+          <>
+            <input
+              type="file"
+              id="file"
+              onChange={isUploaded?null:onFileDrop}
+              accept="application/pdf"
+            />
+            <div className="drop-file-input__label">
+              <img src={uploadImg} alt="" />
+              <p>Arrastra y suelta tus archivos aquí</p>
+            </div>  
+          </>
+        }
       </div>
       {fileList.length == 1? (
         <div className="drop-file-preview">

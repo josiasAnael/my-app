@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../HomePage/Homepage.css";
 import DropFileInput from "../../components/file_drop/";
 import { Split, Line } from "../../components/Layout/styles/Split";
 import { Formik, Field, Form, ErrorMessage } from "formik";
  import http from "../../services/serviceHttp";
+import { useDocument } from "../../context/documentcontext";
+import { getDocument } from "../../services/documenService";
  const {uploadFile} = http
 
-const validar = (values) => {
-  let errors = {};
-  if (!values.file) {
-    errors.file = "El archivo es requerido";
-  }
-  return errors;
-};
 
 const datos = {
   fileopening: "DATOS PARA APERTURAR EXPEDIENTE",
@@ -31,36 +26,50 @@ export const HomePage = () => {
   //obtener el documento para enviarlo
   const [sending, setSending] = useState(false);
   
-  const onFileChange = (value, datos) => {
-    console.log("datos", datos);
+  // obtener el documento del api
+  const [document, setDocument] = useState([]);
+
+  useEffect(() => {
+    getDocument('/documents/data').then((res) => {
+      setDocument(res);
+    });
+
+  },[]);
+
+
+  console.log('document', document)
+  const onFileChange = (value, name) => {
+    console.log("datos", name);
     console.log("data", data.length);
     console.table(data);
-    let temdata = data.find((item) => item.name === datos);
+    let temdata = data.find((item) => item.name === name);
     if (temdata) {
       console.log("temdata", temdata);
       return value.length > 0 ? (temdata.file = value[0]) : data.pop(temdata);
     }
-    data.push({ name: datos, file: value[0] });
+    data.push({ name: name, file: value[0] });
+    console.log("data", data);
+
   };
 
-  const onSubmit = () => {
-    console.log("data", data);
+  const onSubmit = async () => {
     console.table(data);
     setSending(true);
-    
-    // Promise.all(
-    //   data.map((item) => {
-    //     console.log("item", item);
-    //     let formData = new FormData();
-    //     formData.append("file", item.file);
-    //     uploadFile('/uploadFile', formData);
-    //   })
-    //   ).then((value) => {
-    //     console.log("value", value);
-    //     setSending(false);
-    //   });
-      setTimeout(() => {  setSending(false)}, 3000);
-    };
+    let values=[];
+    for (const key in data) {
+      const item = data[key];
+      console.log("item", item);
+      let formData = new FormData();
+      formData.append("file", item.file);
+      formData.append("name", item.name);
+      let res=await uploadFile('/upload', formData);
+      console.log('res',res)
+      values.push(res);
+    }
+    console.table(values);
+    setSending(false);
+    data = [];
+  };
 
   return (
     <>
@@ -70,7 +79,7 @@ export const HomePage = () => {
       >
         <div className="abs-center">
         <h1>Archivos</h1>
-          {sending?
+          {sending ?
 
           <div className="loading">
             cargando
@@ -85,8 +94,9 @@ export const HomePage = () => {
                   <div className="box">
                     <label className="header">{datos[key]}</label>
                     <DropFileInput
-                      onFileChange={(files) => onFileChange(files, datos[key])}
+                      onFileChange={(files) => onFileChange(files, key)}
                       name={key}
+                      isUploaded={document.filter((item) => item.name === key).length > 0}
                     />
                   </div>
                   <div>

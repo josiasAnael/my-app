@@ -1,4 +1,5 @@
-const URL_HOST='https://apiunicah.herokuapp.com/api';
+// const URL_HOST='https://apiunicah.herokuapp.com/api';
+const URL_HOST='http://localhost:3001/api';
 
 export default {
     Get: (url) => {
@@ -55,8 +56,6 @@ export default {
         return fetch(`${URL_HOST}${url}`, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${document.cookie.split('=')[1]}`
             },
             body: data
