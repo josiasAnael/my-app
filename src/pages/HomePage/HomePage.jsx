@@ -71,6 +71,7 @@ export const HomePage = () => {
     data = [];
   };
 
+
   return (
     <>
       <div
@@ -78,12 +79,14 @@ export const HomePage = () => {
         style={{ textAlignLast: "center", marginBottom: "10px" }}
       >
         <div className="abs-center">
+        <br/>
         <h1>Archivos</h1>
           {sending ?
-
-          <div className="loading">
-            cargando
+          <>
+          <div id="contenedor_carga">
+            <div id="carga"></div>
           </div>
+          </>
           :
           <div className="row justify-content-center">
 
@@ -92,7 +95,8 @@ export const HomePage = () => {
               <div key={index} className="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div className="form-group">
                   <div className="box">
-                    <label className="header">{datos[key]}</label>
+                    
+                    <label style={{marginTop:"10px"}} className="header">{datos[key]}</label>
                     <DropFileInput
                       onFileChange={(files) => onFileChange(files, key)}
                       name={key}

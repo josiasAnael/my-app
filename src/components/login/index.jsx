@@ -42,7 +42,7 @@ export const LoginC = () => {
                             <compontL.login100_form login100_form onSubmit={onsubmit}>
                                 <compontL.wrap_input101 wrap_input101>
 
-                                    <compontL.Imput_Label I mput_Label> Usuario:</compontL.Imput_Label>
+                                    <compontL.Imput_Label Imput_Label> Usuario:</compontL.Imput_Label>
                                     <compontL.input100 input100 type="text" name="username" id="floatingInput" placeholder="" style={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px", }} ></compontL.input100>
                                 </compontL.wrap_input101>
 
