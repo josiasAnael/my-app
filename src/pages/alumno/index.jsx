@@ -11,6 +11,7 @@ import { Column } from "primereact/column";
 
 import Modal from "../../components/modal/Modal";
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 
 const initialValues = {
@@ -245,7 +246,9 @@ export const Students = () => {
               scrollable scrollHeight="flex"
               rows={10}
             >
-                <Column field="accountnumber" sortable header="Cuenta"></Column>
+                <Column field="accountnumber" sortable header="Cuenta" body={({accountnumber})=>{
+                  return <Link to={`/detailscustommer/${accountnumber}`}>{accountnumber}</Link>
+                }}></Column>
                 <Column field="username" sortable header="Nombre"></Column>
                 <Column field="career" sortable header="Carrera"></Column>
                 <Column field="createdAt" sortable header="Creado" body={(data)=>{
@@ -311,7 +314,7 @@ export const Students = () => {
               <textarea className="form-control" placeholder="Comentario" rows="3"></textarea>
 
             </div>
-            <div className="col-sm-12 col-md-4 col-xl-4" >
+            <div className="col-sm-12 col-md-8 col-xl-8" >
             {!loading?
             <DataTable
               value={data}

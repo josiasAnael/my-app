@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../HomePage/Homepage.css";
 import DropFileInput from "../../components/file_drop/";
 import { Split, Line } from "../../components/Layout/styles/Split";
 import { Formik, Field, Form, ErrorMessage } from "formik";
  import http from "../../services/serviceHttp";
-import { useDocument } from "../../context/documentcontext";
 import { getDocument } from "../../services/documenService";
  const {uploadFile} = http
 
@@ -25,13 +25,18 @@ let data = [];
 export const HomePage = () => {
   //obtener el documento para enviarlo
   const [sending, setSending] = useState(false);
+
+  let { id } = useParams();
   
   // obtener el documento del api
   const [document, setDocument] = useState([]);
 
   useEffect(() => {
-    getDocument('/documents/data').then((res) => {
-      setDocument(res);
+    let url = id == undefined ? '/documents' : `/documents/${id}`;
+    
+    console.log(url);
+    getDocument(url).then((res) => {
+      setDocument(res);  
     });
 
   },[]);

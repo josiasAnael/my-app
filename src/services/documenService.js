@@ -37,3 +37,4 @@ export const updateStateDocument = (data) => {
         console.log(err);
     })
 }
+

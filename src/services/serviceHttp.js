@@ -1,5 +1,5 @@
-// const URL_HOST='https://apiunicah.herokuapp.com/api';
-const URL_HOST='http://localhost:3001/api';
+const URL_HOST='https://apiunicah.herokuapp.com/api';
+// const URL_HOST='http://localhost:3001/api';
 
 export default {
     Get: (url) => {
