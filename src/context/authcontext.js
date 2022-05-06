@@ -6,6 +6,8 @@ export const useUser=()=>{
     return {
         loading:!data || isValidating,
         token:data?.token,
+        user:data?.user,
+        isadmin:data?.user?.roles.name==='admin',
         setUser:mutate,
     }
 }

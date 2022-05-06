@@ -29,7 +29,7 @@ import { logOut } from "../../services/authService";
 import { useUser } from "../../context/authcontext";
 
 export const Sidebar = () => {
-  const {  setUser } = useUser();
+  const {  setUser,isadmin } = useUser();
   const { setTheme, theme } = useContext(ThemeContext);
   const location = useLocation();
     
@@ -44,7 +44,35 @@ export const Sidebar = () => {
       console.log('token value', v)
     });
   };
-  
+  const linksArray =isadmin? [
+    {
+      label: "Graficas",
+      icon: <MdOutlineAnalytics />,
+      to: "/statistics",
+    },
+    {
+      label: "Alumnos",
+      icon: <BsPeople />,
+      to: "/students",
+    },
+    {
+      label: "Perfil",
+      icon: <BsPersonFill />,
+      to: "/perfil",
+    },
+  ]:
+  [
+    {
+      label: "Documentos",
+      icon: <AiOutlineHome />,
+      to: "/",
+    },
+    {
+      label: "Perfil",
+      icon: <BsPersonFill />,
+      to: "/perfil",
+    },
+  ];
   return (
     <>
       {
@@ -126,29 +154,6 @@ const IconUnicah = [
   },
 ];
 
-
-const linksArray = [
-  {
-    label: "Documentos",
-    icon: <AiOutlineHome />,
-    to: "/",
-  },
-  {
-    label: "Graficas",
-    icon: <MdOutlineAnalytics />,
-    to: "/statistics",
-  },
-  {
-    label: "Alumnos",
-    icon: <BsPeople />,
-    to: "/customers",
-  },
-  {
-    label: "Perfil",
-    icon: <BsPersonFill />,
-    to: "/perfil",
-  },
-];
 
 const secondaryLinksArray = [
   {

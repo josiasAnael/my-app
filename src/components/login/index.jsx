@@ -19,7 +19,7 @@ export const LoginC = () => {
         login(data).then((res) => {
             console.log(res);
             if(res){
-                setUser({token:res.token}).then((token) => {
+                setUser({token:res.token, user: res.user}).then((token) => {
                     console.log('token', token)
                     navigate('/');
                 });

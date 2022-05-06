@@ -15,43 +15,43 @@ import Perfil from "../pages/perfil";
 import Layout from "../components/Layout/Layout";
 
 const RoutesAPP = () => {
-  const { token, loading } = useUser();
+  const { token,isadmin, loading } = useUser();
   return (
     <>
       <Router>
         <Routes>
           <Route
             path="login"
-            element={token ? <Navigate to="/" replace /> : <Login />}
+            element={token ? isadmin?<Navigate to="/students" replace />:<Navigate to="/" replace /> : <Login />}
           />
           <Route
             index
             element={
               <RequireAuth>
-                <HomePage />
+                {isadmin?<Students />:<HomePage  />}
               </RequireAuth>
             }
           />
           <Route
             path="statistics"
             element={
-              <RequireAuth>
+              <RequireAuth isAdmin>
                 <Dashboard />
               </RequireAuth>
             }
           />
           <Route
-            path="customers"
+            path="students"
             element={
-              <RequireAuth>
+              <RequireAuth isAdmin>
                 <Students />
               </RequireAuth>
             }
           />
             <Route
-              path="detailscustommer/:id"
+              path="detailstudent/:id"
               element={
-                <RequireAuth>
+                <RequireAuth isAdmin>
                   <HomePage />
                 </RequireAuth>
               }
@@ -71,14 +71,23 @@ const RoutesAPP = () => {
   );
 };
 
-function RequireAuth({ children }) {
-  const { token, loading } = useUser();
+function RequireAuth({ children,isAdmin }) {
+  const { token,user,isadmin } = useUser();
   let location = useLocation();
-  console.log("token1", token);
   if (token == null) {
-    console.log("token2", token);
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+  if (isAdmin) {
+    if (isadmin) {
+      return (
+        <>
+          <Layout>{children}</Layout>
+        </>
+      );
+    }
+    return <Navigate to="/" replace />;
+  }
+  
   // if(!loading){
   return (
     <>
