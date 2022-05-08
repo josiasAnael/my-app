@@ -11,3 +11,32 @@ export const Loginbt = () => {
             </Container100_btn>
     )
 }
+
+export const SendEmail = () => {
+ 
+    return (
+            <Container100_btn>
+                <Btn primary="true">
+                    Enviar Email
+                </Btn>
+            
+            </Container100_btn>
+    )
+}
+//recuperar contraseña
+export const Recuperarpass = () => {
+    return(
+    <>
+    
+    <div className="container-fluid " style={{marginBlock: "10px"}}>
+        <div className="forgot-password">
+            <a href="#">
+                <label className="forgot-password-label">
+                    ¿Olvidaste tu contraseña?
+                </label>
+            </a>
+        </div>
+    </div>
+    </>
+    )
+}

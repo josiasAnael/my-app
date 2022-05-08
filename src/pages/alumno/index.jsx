@@ -13,6 +13,19 @@ import Modal from "../../components/modal/Modal";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FormUser } from "./form";
+import { FormUserEdit } from "./formedit";
+
+const initialValuesEdit = {
+  name: "",
+  email: "",
+  identity: "",
+  password: "",
+  confirmPassword: "",
+  cars: "",
+
+  status:""
+};
+
 
 const initialValues = {
   name: "",
@@ -30,6 +43,7 @@ export const Students = () => {
   const [isEdit, setisEdit] = useState(false);
   const [values, setValues] = useState(initialValues);
 
+
   const handleChange = (user) => {
     setValues({
       name: user.username,
@@ -45,7 +59,7 @@ export const Students = () => {
       <Split>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-xl-3">
-            <FormUser initialValues={values} isedit={isEdit} setValues={setValues} />
+            <FormUserEdit initialValuesEdit={values} isedit={isEdit} setValues={setValues} />
           </div>
           <div
             className="col-sm-12 col-md-9 col-xl-9"
@@ -123,6 +137,17 @@ export const Students = () => {
                         >
                           Ver
                         </Link>
+                        
+                        {/*boton recuperar contraseña*/}
+                        <button
+                          type="button"
+                          className="btn btn-info ml-2"
+                          onClick={() => {
+                            
+                          }}
+                        >
+                          Recuperar contraseña
+                        </button>
                       </>
                     );
                   }}

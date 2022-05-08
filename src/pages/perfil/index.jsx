@@ -77,11 +77,11 @@ export const Perfil =() => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password" style={{fontSize:"'Roboto', sans-serif" }}>Confirmar Contraseña: </label>
-                        <Field type="password" name="password2" placeholder="Confirmar Contraseña" className="form-control input-sm" style={{fontSize:"'Roboto', sans-serif" }} />
-                        <ErrorMessage name="password2"  component={() => <ErrorInput error={errors.confirmPassword} />} style={{fontSize:"'Roboto', sans-serif" }}/>
+                        <Field type="password" name="confirmPassword" placeholder="Confirmar Contraseña" className="form-control input-sm" style={{fontSize:"'Roboto', sans-serif" }} />
+                        <ErrorMessage name="confirmPassword"  component={() => <ErrorInput error={errors.confirmPassword} />} style={{fontSize:"'Roboto', sans-serif" }}/>
                     </div>
                     <div className="form-group">
-                        <button type="submit" className="btn btn-primary btn-sm" style={{fontSize:"'Roboto', sans-serif" }}>
+                        <button type="submit" disabled={!isSubmitting && !isValid} className="btn btn-primary btn-sm" style={{fontSize:"'Roboto', sans-serif" }}>
                             Guardar
                         </button>
                     </div>

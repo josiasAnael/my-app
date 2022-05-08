@@ -1,7 +1,10 @@
-
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useEffect, useState } from "react";
+import React, { useState } from 'react';
+import { Calendar } from 'primereact/calendar';
+
 import { ErrorInput } from "./custonError";
+
+
 
 const validar = (values) => {
     let errors = {};
@@ -27,77 +30,74 @@ const validar = (values) => {
     if (!values.cars) {
       errors.cars = "Seleccione una carrera";
     }
-    // console.log(errors);
+    if (!values.status)  {
+        errors.status = "Seleccione un estatus";
+    }
+
     return errors;
   };
-  
-  const onSubmit = (values,setSubmitting ) => {
-    alert(JSON.stringify(values, null, 2));
-    console.log('values', values)
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 400);
-  };
-  
 
-export const FormUser = ({initialValues,isedit,setValues }) => {
+export const FormUserEdit =({initialValuesEdit, isedit,setValues }) =>{
     
-    
-    return (
+    const [date1, setDate1] = useState(null);
+    const [date2, setDate2] = useState(null);
+
+    return(
+        <>
         <Formik
-            enableReinitialize={true}
-            initialValues={initialValues}
-            validate={validar}
-            onSubmit={(data, { setSubmitting }) => {
-                onSubmit(data, setSubmitting, isedit );
-            }} 
-            
-          >
-            {({ errors, isSubmitting,isValid,resetForm }) => (
-              <Form>
+        enableReinitialize={true}
+        initialValues={initialValuesEdit}
+        validate={validar}
+        onSubmit={(data, { setSubmitting }) => {
+            onSubmit(data, setSubmitting, isedit );
+            }
+        }
+        >
+        {({ errors, isSubmitting,isValid,resetForm }) => (
+            <Form>
                 <h1>Alumno</h1>
                 <div className="form-group">
-                  <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
-                  <Field
+                    <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
+                    <Field
                     type="text"
                     name="name"
                     placeholder="Nombre"
                     className="form-control input-sm"
-                  />
-                  <ErrorMessage
+                    />
+                    <ErrorMessage
                     name="name"
                     component={() => <ErrorInput error={errors.name} />}
-                  />
+                    />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email" style={{fontSize:"'Roboto', sans-serif" }}>Email</label>
-                  <Field
+                    <label htmlFor="email" style={{fontSize:"'Roboto', sans-serif" }}>Email</label>
+                    <Field
                     type="email"
                     name="email"
                     placeholder="Email"
                     className="form-control input-sm"
-                  />
-                  <ErrorMessage
+                    />
+                    <ErrorMessage
                     name="email"
                     component={() => <ErrorInput error={errors.email} />}
-                  />
+                    />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
-                  <Field
-                    type="text"
-                    name="identity"
-                    placeholder="Identidad"
-                    className="form-control input-sm"
-                    
-                  />
-                  
-                  <ErrorMessage
-                    name="identity"
-                    component={() => <ErrorInput error={errors.identity} />}
-                  />
+                    <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
+                    <Field
+                      type="text"
+                      name="identity"
+                      placeholder="Identidad"
+                      className="form-control input-sm"
+
+                    />
+
+                    <ErrorMessage
+                      name="identity"
+                      component={() => <ErrorInput error={errors.identity} />}
+                    />
                 </div>
 
                 <div className="form-group">
@@ -114,6 +114,7 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                     component={() => <ErrorInput error={errors.password} />}
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="confirmPassword" style={{fontSize:"'Roboto', sans-serif" }}>Confirmar Contraseña</label>
                   <Field
@@ -122,8 +123,7 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                     placeholder="Confirmar Contraseña"
                     className="form-control input-sm"
                   />
-
-                  <ErrorMessage name="confirmPassword" component={() => (
+                 <ErrorMessage name="confirmPassword" component={() => (
                       <ErrorInput error={errors.confirmPassword} />
                     )}
                   />
@@ -131,7 +131,7 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
 
                 <div className="form-group" >
                   <label htmlFor="cars" style={{fontSize:"'Roboto', sans-serif" }}>Carreras</label>
-                  <Field component="select" name="cars" className="form-control input-sm"
+                  <Field name="cars" component="select"  className="form-control input-sm"
                   >
                     <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
                       Seleccione una carrera
@@ -160,11 +160,60 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                   <ErrorMessage name="cars" component={() => <ErrorInput error={errors.cars} />} />
                 </div>
 
+                {/* date */}
+                <div className="form-group">
+                    <label htmlFor="icon">Fecha Inicio Practica</label>
+                    <Calendar 
+                    name="InitPractice" 
+                    id="icon" 
+                    /*value={date1}*/
+                    onChange={(e) => setDate1(e.value)} showIcon 
+                    />
+                   
+                </div>
 
-                
+                <div className="form-group">
+                    <label htmlFor="icon">Fecha Final Practica</label>
+                    <Calendar  
+                        name="EndPractice" 
+                        id="icon" 
+                       /* value={date2}*/ 
+                        onClick={(e) => setDate2(e.value)} showIcon
+                         
+                        />
+
+                   
+                </div>
+
+
+
+                <div className="form-group">
+                  <label htmlFor="status" style={{fontSize:"'Roboto', sans-serif" }}>Estado</label>
+                  <Field name="status" component="select"  className="form-control input-sm"
+                  >
+                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
+                      Seleccione un estado
+                    </option>
+                    <option value="Aguascalientes" style={{fontSize:"'Roboto', sans-serif" }}>Activo</option>
+                    <option value="BajaCalifornia" style={{fontSize:"'Roboto', sans-serif" }}>Inactivo</option>
+                  </Field>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="roles" style={{fontSize:"'Roboto', sans-serif" }}>Cargo</label>
+                  <Field name="roles" component="select"  className="form-control input-sm"
+                  >
+                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
+                      Seleccione un cargo
+                    </option>
+                    <option value="Alumno" style={{fontSize:"'Roboto', sans-serif" }}>Alumno</option>
+                    <option value="Admin" style={{fontSize:"'Roboto', sans-serif" }}>Administrador</option>
+                  </Field>
+                </div>
+
                 <div className="row">
                   <div className="col-12 mb-6">
-                    <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid} style={{backgroundColor:"#004CBE" }}>
+                    <button type="submit" className="btn btn-primary" disabled={!isSubmitting && !isValid} style={{backgroundColor:"#004CBE" }}>
                       GUARDAR 
                     </button>
                 
@@ -186,8 +235,9 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                   </div>
                 </div>
 
-              </Form>
+            </Form>
             )}
           </Formik>
-    )
+        </>
+        )
 }
