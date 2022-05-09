@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from '@ant-design/charts'
 
+import { useParams } from "react-router-dom";
+import { useDocument } from "../../context/documentcontext";
+
 export const Dashboard = () => {
+    
+    let { id } = useParams();
+    const { document, loading,setId } = useDocument(id);
+    console.log('document', document)
 
     const data=[
-        {pdf: "pendiente1", porcentaje: 80},
-        {pdf: "pendiente2", porcentaje: 80},
-        {pdf: "Realizado3", porcentaje: 100},
-        {pdf: "pendiente4", porcentaje: 80},
-        {pdf: "pendiente5", porcentaje: 10},
-        {pdf: "pendiente6", porcentaje: 100},
-    
+        {pdf: "studentidentity", porcentaje: 80},
+        {pdf: "witnessidentityone", porcentaje: 80},
+        {pdf: "witnessidentitytwo", porcentaje: 100},
+        {pdf: "collegetitle", porcentaje: 80},
+        {pdf: "acceptanceletter", porcentaje: 10},
+        {pdf: "fileopening", porcentaje: 100},
+        {pdf: "residentialrecord", porcentaje: 100},    
+        {pdf: "practicalrequest", porcentaje: 100},
+        {pdf: "revicionControl", porcentaje: 100},
+        {pdf: "monographguide", porcentaje: 100},
     ]
 
     const Configuration ={
