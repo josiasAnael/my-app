@@ -13,14 +13,16 @@ import { createRoot } from "react-dom/client";
 import LayoutC from "./pages/Layout";
 
 import { SWRConfig } from "swr";
-
-import http from "./services/serviceHttp";
-const { fetcher } = http;
+import { Toast } from "primereact/toast";
+import { Button } from "primereact/button";
+import { Toastprovider } from "./context/toastContext";
 
 createRoot(document.getElementById("root")).render(
   <>
     <SWRConfig value={{}}>
-      <LayoutC />
+      <Toastprovider>
+        <LayoutC />
+      </Toastprovider>
     </SWRConfig>
   </>
 );

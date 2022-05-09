@@ -13,6 +13,7 @@ import Login from "../context";
 import Dashboard from "../pages/dashboard";
 import Perfil from "../pages/perfil";
 import Layout from "../components/Layout/Layout";
+import { PasswordR } from "../pages/Password";
 
 const RoutesAPP = () => {
   const { token,isadmin, loading } = useUser();
@@ -65,6 +66,15 @@ const RoutesAPP = () => {
               </RequireAuth>
             }
           />
+          {/* recovery password */}
+          <Route
+            path="changepassword"
+            element={
+                <PasswordR />
+            }
+          />
+
+
         </Routes>
       </Router>
     </>

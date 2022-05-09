@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import { useState,useEffect ,createContext} from "react";
 import { Helmet } from "react-helmet";
 import { ThemeProvider } from "styled-components";
 import Routes from "../../routes/Routes";
@@ -6,7 +6,7 @@ import { GlobalStyle } from "../../components/Layout/styles/globalStyles";
 import { darkTheme, lightTheme } from "../../components/Layout/styles/theme";
 import { useUser } from "../../context/authcontext";
 
-export const ThemeContext = React.createContext(null);
+export const ThemeContext = createContext(null);
 export const LayoutC = () => {
   const [theme, setTheme] = useState("light");
   const themeStyle = theme === "light" ? lightTheme : darkTheme;

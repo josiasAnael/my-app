@@ -4,10 +4,14 @@ import { login } from '../../services/authService.js';
 
 import {useUser} from '../../context/authcontext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ToastContext } from '../../context/toastContext.jsx';
 
 export const LoginC = () => {
     let navigate = useNavigate();
     const {loading,token,setUser} = useUser();
+
+    const toast = useContext(ToastContext)
 
     const onsubmit = (e) => {
         e.preventDefault();
@@ -16,16 +20,35 @@ export const LoginC = () => {
             accountnumber: form.username.value,
             password: form.password.value,
         };
-        login(data).then((res) => {
-            console.log(res);
-            if(res){
-                setUser({token:res.token, user: res.user}).then((token) => {
+        login(data).then(({token, user, message}) => {
+
+            if(token){
+                toast.showsuccess({
+                    summary: 'Login',
+                    detail: `Bienvenido ${user.username}`,
+                    life: 3000
+                });
+
+                setUser({token, user}).then((token) => {
                     console.log('token', token)
                     navigate('/');
                 });
             }
+            else{
+                toast.showerror({
+                    summary: 'Login',
+                    detail: message,
+                    life: 3000
+                });
+            }
         }).catch ((err) => {
             console.log(err);
+            toast.showerror({
+                summay: 'Login',
+                detail: 'Login incorrecto',
+                severity: 'error',
+                life: 3000
+            });
         });
     }
     return (
