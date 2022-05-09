@@ -1,243 +1,356 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import React, { useState } from 'react';
-import { Calendar } from 'primereact/calendar';
+import React, { useState } from "react";
 
 import { ErrorInput } from "./custonError";
-
-
-
+import { useCustomer } from "../../context/customerContext";
+import http from "../../services/serviceHttp";
+const {Put}=http;
 const validar = (values) => {
-    let errors = {};
-    if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = "Las contraseñas no coinciden";
-    }
-    if (!values.name) {                                                                                                                                                            
-      errors.name = "El nombre es requerido";
-    }
-    // valirar si la identidad es valido
-    if (!values.identity) {
-      errors.identity = "La identidad es requerida";
-    }
-    // valirar si la contraseña es valido
-    if (!values.password) {
-      errors.password = "La contraseña es requerida";
-    }
-    if (!values.email) {
-      errors.email = "El email es requerido";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = "El email no es válido";
-    }
-    if (!values.cars) {
-      errors.cars = "Seleccione una carrera";
-    }
-    if (!values.status)  {
-        errors.status = "Seleccione un estatus";
-    }
+  let errors = {};
 
-    return errors;
-  };
+  if (!values.username) {
+    errors.name = "El nombre es requerido";
+  }
+  // valirar si la identidad es valido
+  if (!values.accountNumber) {
+    errors.accountNumber = "La identidad es requerida";
+  }
+  if (!values.email) {
+    errors.email = "El email es requerido";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "El email no es válido";
+  }
+  if (!values.career) {
+    errors.career = "Seleccione una carrera";
+  }
+  if (!values.status) {
+    errors.status = "Seleccione un estatus";
+  }
+  if(!values.InitPractice){
+    errors.InitPractice = "La fecha de inicio de práctica es requerida";
+  }
+  if(!values.EndPractice){
+    errors.EndPractice = "La fecha de fin de práctica es requerida";
+  }
+  // roles
+  if (!values.roles) {
+    errors.roles = "Seleccione un rol";
+  }
 
-export const FormUserEdit =({initialValuesEdit, isedit,setValues }) =>{
-    
-    const [date1, setDate1] = useState(null);
-    const [date2, setDate2] = useState(null);
 
-    return(
-        <>
-        <Formik
+  return errors;
+};
+
+
+const onsubmit = (values, { setSubmitting }) => {
+  const {id}=values;
+
+  Put(`/users/updateUser/${id}` , {
+    ...values,
+    InitPractice: new Date(values.InitPractice).toISOString(),
+    EndPractice: new Date(values.EndPractice).toISOString(),
+  }).then(res => {
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  }).finally(() => {
+    setSubmitting(false);
+  });  
+}
+
+
+export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmit }) => {
+  const onsubmit = (values, { setSubmitting }) => {
+    const {id}=values;
+  
+    Put(`/users/updateUser/${id}` , {
+      ...values,
+      InitPractice: new Date(values.InitPractice).toISOString(),
+      EndPractice: new Date(values.EndPractice).toISOString(),
+    }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    }).finally(() => {
+      setSubmitting(false);
+      handleSubmit();
+    });  
+  }
+  return (
+    <>
+      <Formik
         enableReinitialize={true}
         initialValues={initialValuesEdit}
         validate={validar}
-        onSubmit={(data, { setSubmitting }) => {
-            onSubmit(data, setSubmitting, isedit );
-            }
-        }
-        >
-        {({ errors, isSubmitting,isValid,resetForm }) => (
-            <Form>
-                <h1>Alumno</h1>
-                <div className="form-group">
-                    <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
-                    <Field
-                    type="text"
-                    name="name"
-                    placeholder="Nombre"
-                    className="form-control input-sm"
-                    />
-                    <ErrorMessage
-                    name="name"
-                    component={() => <ErrorInput error={errors.name} />}
-                    />
-                </div>
+        onSubmit={onsubmit}
+      >
+        {({ errors, isSubmitting, isValid, resetForm }) => (
+          <Form>
+            <h1>Alumno</h1>
+            <div className="form-group">
+              <label
+                htmlFor="username"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Nombre
+              </label>
+              <Field
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Nombre"
+                className="form-control input-sm"
+              />
+              <ErrorMessage
+                name="username"
+                component={() => <ErrorInput error={errors.username} />}
+              />
+            </div>
 
-                <div className="form-group">
-                    <label htmlFor="email" style={{fontSize:"'Roboto', sans-serif" }}>Email</label>
-                    <Field
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="form-control input-sm"
-                    />
-                    <ErrorMessage
-                    name="email"
-                    component={() => <ErrorInput error={errors.email} />}
-                    />
-                </div>
+            <div className="form-group">
+              <label
+                htmlFor="email"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Email
+              </label>
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="form-control input-sm"
+              />
+              <ErrorMessage
+                name="email"
+                component={() => <ErrorInput error={errors.email} />}
+              />
+            </div>
 
-                <div className="form-group">
-                    <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
-                    <Field
-                      type="text"
-                      name="identity"
-                      placeholder="Identidad"
-                      className="form-control input-sm"
+            <div className="form-group">
+              <label
+                htmlFor="accountNumber"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Identidad
+              </label>
+              <Field
+                type="text"
+                name="accountNumber"
+                placeholder="Identidad"
+                className="form-control input-sm"
+              />
 
-                    />
+              <ErrorMessage
+                name="accountNumber"
+                component={() => <ErrorInput error={errors.accountNumber} />}
+              />
+            </div>
 
-                    <ErrorMessage
-                      name="identity"
-                      component={() => <ErrorInput error={errors.identity} />}
-                    />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="password" style={{fontSize:"'Roboto', sans-serif" }}>Contraseña</label>
-                  <Field
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    className="form-control input-sm"
-                  />
-
-                  <ErrorMessage
-                    name="password"
-                    component={() => <ErrorInput error={errors.password} />}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="confirmPassword" style={{fontSize:"'Roboto', sans-serif" }}>Confirmar Contraseña</label>
-                  <Field
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirmar Contraseña"
-                    className="form-control input-sm"
-                  />
-                 <ErrorMessage name="confirmPassword" component={() => (
-                      <ErrorInput error={errors.confirmPassword} />
-                    )}
-                  />
-                </div>
-
-                <div className="form-group" >
-                  <label htmlFor="cars" style={{fontSize:"'Roboto', sans-serif" }}>Carreras</label>
-                  <Field name="cars" component="select"  className="form-control input-sm"
+            <div className="form-group">
+              <label
+                htmlFor="career"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Carreras
+              </label>
+              <Field
+                name="career"
+                component="select"
+                className="form-control input-sm"
+              >
+                <option
+                  value=""
+                  disabled
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Seleccione una carrera
+                </option>
+                <optgroup label="Ingenierias">
+                  <option
+                    value="Computacion"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
                   >
-                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
-                      Seleccione una carrera
-                    </option>
-                    <optgroup label="Ingenierias">
-                      <option value="Computacion" style={{fontSize:"'Roboto', sans-serif" }}>
-                        Ciencias de la Computacion
-                      </option>
-                      <option value="Administracion" style={{fontSize:"'Roboto', sans-serif" }}>
-                        Adminitración y Gestion Estrategica
-                      </option>
-                      <option value="Civil" style={{fontSize:"'Roboto', sans-serif" }}>Civil</option>
-                    </optgroup>
-                    <optgroup label="Licenciaturas">
-                      <option value="Derecho" style={{fontSize:"'Roboto', sans-serif" }}>Derecho</option>
-                      <option value="Phicologia" style={{fontSize:"'Roboto', sans-serif" }}>Phicologia</option>
-                      <option value="Mercadotecnia" style={{fontSize:"'Roboto', sans-serif" }}>Mercadotecnia</option>
-                      <option value="CirujuaDental" style={{fontSize:"'Roboto', sans-serif" }}>Cirugía Dental</option>
-                    </optgroup>
-
-                    <optgroup label="Doctorado">
-                      <option value="Medicina" style={{fontSize:"'Roboto', sans-serif" }}>Medicina</option>
-                    </optgroup>
-                  </Field>
-
-                  <ErrorMessage name="cars" component={() => <ErrorInput error={errors.cars} />} />
-                </div>
-
-                {/* date */}
-                <div className="form-group">
-                    <label htmlFor="icon">Fecha Inicio Practica</label>
-                    <Calendar 
-                    name="InitPractice" 
-                    id="icon" 
-                    /*value={date1}*/
-                    onChange={(e) => setDate1(e.value)} showIcon 
-                    />
-                   
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="icon">Fecha Final Practica</label>
-                    <Calendar  
-                        name="EndPractice" 
-                        id="icon" 
-                       /* value={date2}*/ 
-                        onClick={(e) => setDate2(e.value)} showIcon
-                         
-                        />
-
-                   
-                </div>
-
-
-
-                <div className="form-group">
-                  <label htmlFor="status" style={{fontSize:"'Roboto', sans-serif" }}>Estado</label>
-                  <Field name="status" component="select"  className="form-control input-sm"
+                    Ciencias de la Computacion
+                  </option>
+                  <option
+                    value="Administracion"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
                   >
-                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
-                      Seleccione un estado
-                    </option>
-                    <option value="Aguascalientes" style={{fontSize:"'Roboto', sans-serif" }}>Activo</option>
-                    <option value="BajaCalifornia" style={{fontSize:"'Roboto', sans-serif" }}>Inactivo</option>
-                  </Field>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="roles" style={{fontSize:"'Roboto', sans-serif" }}>Cargo</label>
-                  <Field name="roles" component="select"  className="form-control input-sm"
+                    Adminitración y Gestion Estrategica
+                  </option>
+                  <option
+                    value="Civil"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
                   >
-                    <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
-                      Seleccione un cargo
-                    </option>
-                    <option value="Alumno" style={{fontSize:"'Roboto', sans-serif" }}>Alumno</option>
-                    <option value="Admin" style={{fontSize:"'Roboto', sans-serif" }}>Administrador</option>
-                  </Field>
-                </div>
+                    Civil
+                  </option>
+                </optgroup>
+                <optgroup label="Licenciaturas">
+                  <option
+                    value="Derecho"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
+                  >
+                    Derecho
+                  </option>
+                  <option
+                    value="Phicologia"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
+                  >
+                    Phicologia
+                  </option>
+                  <option
+                    value="Mercadotecnia"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
+                  >
+                    Mercadotecnia
+                  </option>
+                  <option
+                    value="CirujuaDental"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
+                  >
+                    Cirugía Dental
+                  </option>
+                </optgroup>
 
-                <div className="row">
-                  <div className="col-12 mb-6">
-                    <button type="submit" className="btn btn-primary" disabled={!isSubmitting && !isValid} style={{backgroundColor:"#004CBE" }}>
-                      GUARDAR 
-                    </button>
-                
-          
-                    <button type="button" className="btn btn-warning ml-3" onClick={()=>{
-                        setValues({
-                            name:"",
-                            email:"",
-                            identity:"",
-                            password:"",
-                            confirmPassword:"",
-                            cars:"",
-                            
-                        })
-                    }} style={{fontSize:"'Roboto', sans-serif" }}>
-                      LIMPIAR
-                    </button>
-                    
-                  </div>
-                </div>
+                <optgroup label="Doctorado">
+                  <option
+                    value="Medicina"
+                    style={{ fontSize: "'Roboto', sans-serif" }}
+                  >
+                    Medicina
+                  </option>
+                </optgroup>
+              </Field>
 
-            </Form>
-            )}
-          </Formik>
-        </>
-        )
-}
+              <ErrorMessage
+                name="career"
+                component={() => <ErrorInput error={errors.career} />}
+              />
+            </div>
+
+            {/* date */}
+            <div className="form-group">
+              <label htmlFor="InitPractice">Fecha Inicio Practica</label>
+
+              <div className="from-group">
+                <Field
+                  type="date"
+                  name="InitPractice"
+                  id="InitPractice"
+                  className="form-control input-sm"
+              />
+              <ErrorMessage
+                name="InitPractice"
+                component={() => <ErrorInput error={errors.InitPractice} />}
+              />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="EndPractice">Fecha Final Practica</label>
+              
+
+              <div className="from-group">
+                <Field
+                  type="date"
+                  name="EndPractice"
+                  id="EndPractice"
+                  className="form-control input-sm"
+              />
+              <ErrorMessage
+                name="EndPractice"
+                component={() => <ErrorInput error={errors.EndPractice} />}
+              />
+              </div>
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="status"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Estado
+              </label>
+              <Field
+                name="status"
+                component="select"
+                className="form-control input-sm"
+              >
+                <option
+                  value=""
+                  disabled
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Seleccione un estado
+                </option>
+                <option value="1" style={{ fontSize: "'Roboto', sans-serif" }}>
+                  Activo
+                </option>
+                <option value="0" style={{ fontSize: "'Roboto', sans-serif" }}>
+                  Inactivo
+                </option>
+              </Field>
+            </div>
+
+            <div className="form-group">
+              <label
+                htmlFor="roles"
+                style={{ fontSize: "'Roboto', sans-serif" }}
+              >
+                Cargo
+              </label>
+              <Field
+                name="roles"
+                component="select"
+                className="form-control input-sm"
+              >
+                <option
+                  value=""
+                  disabled
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Seleccione un cargo
+                </option>
+                <option
+                  value="user"
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Alumno
+                </option>
+                <option
+                  value="admin"
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Administrador
+                </option>
+              </Field>
+            </div>
+
+            <div className="row">
+              <div className="col-12 mb-6">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={!isSubmitting && !isValid}
+                  style={{ backgroundColor: "#004CBE" }}
+                >
+                  GUARDAR
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-warning ml-3"
+                  onClick={
+                    handleSubmit
+                  }
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  LIMPIAR
+                </button>
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
+  );
+};

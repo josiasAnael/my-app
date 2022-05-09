@@ -2,71 +2,81 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useEffect, useState } from "react";
 import { ErrorInput } from "./custonError";
-
+import http from "../../services/serviceHttp";
+const {Post}=http;
 const validar = (values) => {
     let errors = {};
     if (values.password !== values.confirmPassword) {
       errors.confirmPassword = "Las contraseñas no coinciden";
     }
-    if (!values.name) {                                                                                                                                                            
-      errors.name = "El nombre es requerido";
+    if (!values.username) {                                                                                                                                                            
+      errors.username = "El nombre es requerido";
     }
     // valirar si la identidad es valido
-    if (!values.identity) {
-      errors.identity = "La identidad es requerida";
+    if (!values.accountNumber) {
+      errors.accountNumber = "La identidad es requerida";
     }
     // valirar si la contraseña es valido
     if (!values.password) {
       errors.password = "La contraseña es requerida";
+    }
+    // valirar si la contraseña es valido
+    if (!values.confirmPassword) {
+      errors.confirmPassword = "La contraseña es requerida";
+    }
+    if(!(values.password === values.confirmPassword)){
+      errors.confirmPassword = "Las contraseñas no coinciden";
     }
     if (!values.email) {
       errors.email = "El email es requerido";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
       errors.email = "El email no es válido";
     }
-    if (!values.cars) {
-      errors.cars = "Seleccione una carrera";
+    if (!values.career) {
+      errors.career = "Seleccione una carrera";
     }
     // console.log(errors);
     return errors;
   };
   
-  const onSubmit = (values,setSubmitting ) => {
-    alert(JSON.stringify(values, null, 2));
-    console.log('values', values)
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 400);
-  };
   
-
-export const FormUser = ({initialValues,isedit,setValues }) => {
+  
+  export const FormUser = ({initialValues,isedit,setValues,handleSubmit }) => {
     
+    const onSubmit = (values,{ setSubmitting }) => {
+      console.log(values);
+      Post("/users/createUser",values).then(res=>{
+        console.log(res);
+      }).catch(err=>{
+        console.log(err);
+      }).finally(()=>{
+        handleSubmit();
+        setSubmitting(false);
+      });
+    };
     
     return (
         <Formik
             enableReinitialize={true}
             initialValues={initialValues}
             validate={validar}
-            onSubmit={(data, { setSubmitting }) => {
-                onSubmit(data, setSubmitting, isedit );
-            }} 
+            onSubmit={onSubmit} 
             
           >
             {({ errors, isSubmitting,isValid,resetForm }) => (
               <Form>
                 <h1>Alumno</h1>
                 <div className="form-group">
-                  <label htmlFor="name" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
+                  <label htmlFor="username" style={{fontSize:"'Roboto', sans-serif" }}>Nombre</label>
                   <Field
                     type="text"
-                    name="name"
+                    name="username"
                     placeholder="Nombre"
                     className="form-control input-sm"
                   />
                   <ErrorMessage
-                    name="name"
-                    component={() => <ErrorInput error={errors.name} />}
+                    name="username"
+                    component={() => <ErrorInput error={errors.username} />}
                   />
                 </div>
 
@@ -88,15 +98,15 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                   <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
                   <Field
                     type="text"
-                    name="identity"
+                    name="accountNumber"
                     placeholder="Identidad"
                     className="form-control input-sm"
                     
                   />
                   
                   <ErrorMessage
-                    name="identity"
-                    component={() => <ErrorInput error={errors.identity} />}
+                    name="accountNumber"
+                    component={() => <ErrorInput error={errors.accountNumber} />}
                   />
                 </div>
 
@@ -130,8 +140,8 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                 </div>
 
                 <div className="form-group" >
-                  <label htmlFor="cars" style={{fontSize:"'Roboto', sans-serif" }}>Carreras</label>
-                  <Field component="select" name="cars" className="form-control input-sm"
+                  <label htmlFor="career" style={{fontSize:"'Roboto', sans-serif" }}>Carreras</label>
+                  <Field component="select" name="career" className="form-control input-sm"
                   >
                     <option value="" disabled style={{fontSize:"'Roboto', sans-serif" }}>
                       Seleccione una carrera
@@ -157,7 +167,7 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                     </optgroup>
                   </Field>
 
-                  <ErrorMessage name="cars" component={() => <ErrorInput error={errors.cars} />} />
+                  <ErrorMessage name="career" component={() => <ErrorInput error={errors.career} />} />
                 </div>
 
 
@@ -169,17 +179,7 @@ export const FormUser = ({initialValues,isedit,setValues }) => {
                     </button>
                 
           
-                    <button type="button" className="btn btn-warning ml-3" onClick={()=>{
-                        setValues({
-                            name:"",
-                            email:"",
-                            identity:"",
-                            password:"",
-                            confirmPassword:"",
-                            cars:"",
-                            
-                        })
-                    }} style={{fontSize:"'Roboto', sans-serif" }}>
+                    <button type="button" className="btn btn-warning ml-3" onClick={handleSubmit} style={{fontSize:"'Roboto', sans-serif" }}>
                       LIMPIAR
                     </button>
                     

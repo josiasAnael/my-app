@@ -1,65 +1,85 @@
-import React, { useState, useEffect } from "react";
-
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { ErrorInput } from "./custonError";
-import { Split } from "../../components/Layout/styles/Split";
-import { useCustomer } from "../../context/customerContext";
-
+import { Column } from "primereact/column";
 // importar data table
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-
-import Modal from "../../components/modal/Modal";
-import styled from "styled-components";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FormUser } from "./form";
+import { Split } from "../../components/Layout/styles/Split";
+import { useCustomer } from "../../context/customerContext";
 import { FormUserEdit } from "./formedit";
-
-const initialValuesEdit = {
-  name: "",
-  email: "",
-  identity: "",
-  password: "",
-  confirmPassword: "",
-  cars: "",
-
-  status:""
-};
-
+import { FormUser } from "./form";
 
 const initialValues = {
-  name: "",
+  id: "",
+  username: "",
   email: "",
-  identity: "",
+  accountNumber: "",
+  career: "",
+  roles: "",
+  InitPractice: "",
+  EndPractice: "",
+  status: "",
   password: "",
   confirmPassword: "",
-  cars: "",
 };
 
 export const Students = () => {
-  const { loading, data } = useCustomer();
+  const { loading, customers, handleUpdate } = useCustomer();
 
-  const [estadoModal1, cambiarEstadoModal1] = useState(false);
   const [isEdit, setisEdit] = useState(false);
   const [values, setValues] = useState(initialValues);
 
-
   const handleChange = (user) => {
+    console.log(user);
     setValues({
-      name: user.username,
+      id: user._id,
+      username: user.username,
       email: user.email,
-      identity: user.accountnumber,
-      cars: user.career,
+      accountNumber: user.accountnumber,
+      career: user.career,
+      roles: user.roles.name,
+      status: user.status,
+      InitPractice: new Intl.DateTimeFormat("fr-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(Date.parse(user.InitPractice)),
+      EndPractice: new Intl.DateTimeFormat("fr-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(
+        new Date(Date.parse(user.InitPractice) + 3600 * 1000 * 24 * 90)
+      ),
     });
     setisEdit(true);
   };
+
+  const handleSubmit = () => {
+    handleUpdate();
+    setisEdit(false);
+    setValues(initialValues);
+  }
 
   return (
     <>
       <Split>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-xl-3">
-            <FormUserEdit initialValuesEdit={values} isedit={isEdit} setValues={setValues} />
+            {isEdit ? (
+              <FormUserEdit
+                initialValuesEdit={values}
+                isedit={isEdit}
+                setValues={setValues}
+                handleSubmit={handleSubmit}
+              />
+            ) : (
+              <FormUser
+                initialValues={values}
+                isedit={isEdit}
+                setValues={setValues}
+                handleSubmit={handleSubmit}
+              />
+            )}
           </div>
           <div
             className="col-sm-12 col-md-9 col-xl-9"
@@ -68,7 +88,7 @@ export const Students = () => {
             <h1 style={{ fontSize: "'Roboto', sans-serif" }}>Alumnos</h1>
             {!loading ? (
               <DataTable
-                value={data}
+                value={customers}
                 responsiveLayout="scroll"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 paginator
@@ -137,14 +157,12 @@ export const Students = () => {
                         >
                           Ver
                         </Link>
-                        
+
                         {/*boton recuperar contraseña*/}
                         <button
                           type="button"
                           className="btn btn-info ml-2"
-                          onClick={() => {
-                            
-                          }}
+                          onClick={() => {}}
                         >
                           Recuperar contraseña
                         </button>
@@ -160,7 +178,6 @@ export const Students = () => {
         </div>
 
         {/* Modal #1 */}
-        
       </Split>
     </>
   );
