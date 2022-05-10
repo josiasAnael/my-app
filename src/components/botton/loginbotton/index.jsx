@@ -15,14 +15,27 @@ export const Loginbt = () => {
 export const SendEmail = () => {
  
     return (
-            <Container100_btn>
+            
                 <Btn primary="true">
                     Enviar Email
+                </Btn>
+            
+           
+    )
+}
+
+export const CodigoVerificacion = () => {
+ 
+    return (
+            <Container100_btn>
+                <Btn primary>
+                    Ingrese Codigo
                 </Btn>
             
             </Container100_btn>
     )
 }
+
 //recuperar contraseña
 export const Recuperarpass = () => {
     return(

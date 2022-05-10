@@ -54,29 +54,29 @@ export const LoginC = () => {
     return (
         <>
             <compontL.Loginlimiter limiter>
-                <compontL.containerlogin100 containerlogin100>
-                        <compontL.form_title loginformtitle>
+                <compontL.Containerlogin100 Containerlogin100>
+                        <compontL.Form_title loginformtitle>
                             {/* poner una imagen */}
                             <div className="logo">
                                 <compontL.Logo Logo src="https://login.sec.unicah.net/imgs/logounicah.png" alt="logo" />
                             </div>
 
-                        </compontL.form_title>
-                            <compontL.login100_form login100_form onSubmit={onsubmit}>
-                                <compontL.wrap_input101 wrap_input101>
+                        </compontL.Form_title>
+                            <compontL.Login100_form Login100_form onSubmit={onsubmit}>
+                                <compontL.Wrap_input101 Wrap_input101>
 
                                     <compontL.Imput_Label Imput_Label> Usuario:</compontL.Imput_Label>
-                                    <compontL.input100 input100 type="text" name="username" id="floatingInput" placeholder="" style={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px", }} ></compontL.input100>
-                                </compontL.wrap_input101>
+                                    <compontL.Input100 Input100 type="text" name="username" id="floatingInput" placeholder="" style={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px", }} ></compontL.Input100>
+                                </compontL.Wrap_input101>
 
 
-                                <compontL.wrap_input101 wrap_input101>
+                                <compontL.Wrap_input101 Wrap_input101>
                                     <compontL.Imput_Label Imput_Label> Contraseña:</compontL.Imput_Label>
-                                    <compontL.input100 input100  type="password" name="password" id="floatingPassword" placeholder=""/>
-                                </compontL.wrap_input101>
+                                    <compontL.Input100 Input100  type="password" name="password" id="floatingPassword" placeholder=""/>
+                                </compontL.Wrap_input101>
                             <Loginbt/>                           
-                            </compontL.login100_form>
-                </compontL.containerlogin100>
+                            </compontL.Login100_form>
+                </compontL.Containerlogin100>
             </compontL.Loginlimiter>
         </>
     )

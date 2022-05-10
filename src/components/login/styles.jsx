@@ -9,10 +9,26 @@ ${({limiter})=> limiter && css`
 }
 `
 ///
-export const containerlogin100= styled.div`
-${({containerlogin100})=> containerlogin100 && css`
+export const Containerlogin100= styled.div`
+${({Containerlogin100})=> Containerlogin100 && css`
     width: 100%;  
     min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    flex-direction:column; 
+    background-color: transparent;
+`
+}
+`
+
+export const Containeremail= styled.div`
+${({Containeremail})=> Containeremail && css`
+    width: 100%;  
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -61,7 +77,7 @@ ${({Imput_Label})=> Imput_Label && css`
 `
 
 
-export const form_title= styled.span`
+export const Form_title= styled.span`
 ${({loginformtitle})=> loginformtitle && css`
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -75,8 +91,8 @@ ${({loginformtitle})=> loginformtitle && css`
 }
 `
 
-export const login100_form= styled.form`
-${({login100_form})=> login100_form && css`
+export const Login100_form= styled.form`
+${({Login100_form})=> Login100_form && css`
 width: 350px;
 height:300px;
     padding-bottom: 33px;
@@ -87,8 +103,20 @@ height:300px;
 }
 `
 
-export const wrap_input101= styled.div`
-${({wrap_input101})=> wrap_input101 && css`
+export const FormPassword= styled.form`
+${({FormPassword})=> FormPassword && css`
+width: 400px;
+height:330px;
+    padding-bottom: 33px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(25, 0, 255, 0.24);
+`
+}
+`
+
+export const Wrap_input101= styled.div`
+${({Wrap_input101})=> Wrap_input101 && css`
 
  
     position: relative;
@@ -157,8 +185,8 @@ ${({focus_input100})=> focus_input100 && css`
 }
 `
 
-export const input100= styled.input`
-${({input100})=> input100 && css`
+export const Input100= styled.input`
+${({Input100})=> Input100 && css`
 
 
     margin: 0;

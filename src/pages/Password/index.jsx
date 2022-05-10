@@ -1,5 +1,12 @@
 import { Steps } from "primereact/steps";
 import { useContext, useState } from "react";
+import {StepsOne} from "../../components/changePassword/steps_one";
+import {StepsTwo} from "../../components/changePassword/steps_two";
+import {StepsThree} from "../../components/changePassword/steps_three";
+
+import {Loginlimiter,Containerlogin100,Form_title,Logo,Login100_form,Wrap_input101} from "../../components/login/styles";
+import {SendEmail} from "../../components/botton/loginbotton/index"
+import {Btn,Container100_btn} from "../../components/botton/loginbotton/styles";
 
 export const PasswordR = () => {
   const Items = [
@@ -19,13 +26,13 @@ export const PasswordR = () => {
   const pageChange = (index) => {
     switch (index) {
       case 0:
-        return <p>SOY EL CORREO</p>;
+        return <StepsOne />;
       case 1:
-        return <p>SOY EL CODIGO</p>;
+        return <StepsTwo />;
       case 2:
-        return <p>SOY EL CAMBIO DE CONTRASEÑA</p>;
+        return <StepsThree />;  
       default:
-        return <p>SOY EL CORREO</p>;
+        return <StepsOne />;
     }
   };
   const nextSteps = () => {
@@ -34,18 +41,40 @@ export const PasswordR = () => {
     }
   }
 
+  const prevSteps = () => {
+    if (activeIndex > 0) {
+      setActiveIndex(activeIndex - 1);
+    }
+  }
+
   return (
     <>
-      <div className="container">
-        <Steps
-          model={Items}
-          activeIndex={activeIndex}
-          // onSelect={(e) => setActiveIndex(e.index)}
-          readOnly={true}
-        />
-        {pageChange(activeIndex)}
-        <button className="btn btn-primary" disabled={(activeIndex+1)>=Items.length} onClick={nextSteps}> Siguiente </button>
-      </div>
+      <Loginlimiter limiter>
+        <Containerlogin100 Containerlogin100>
+        <Form_title loginformtitle>
+          <div className="logo">
+              <Logo Logo src="https://login.sec.unicah.net/imgs/logounicah.png" alt="logo" />
+          </div>
+          </Form_title>
+          <Steps
+            model={Items}
+            activeIndex={activeIndex}
+            // onSelect={(e) => setActiveIndex(e.index)}
+            readOnly={true}
+          style={{paddingBottom:"1.5em", color:"#2e18d4"}}
+          />
+
+          {pageChange(activeIndex)}
+          <>
+            <Btn style={{position:"absolute", marginTop:" 320px"}} primary="true" className="btn btn-primary" disabled={(activeIndex+1)>=Items.length} onClick={nextSteps}>
+              Siguiente
+            </Btn>
+            <Btn  style={{position:"absolute", marginTop:" 410px"}} className="btn btn-danger" disabled={(activeIndex-1)>=Items.length} onClick={prevSteps}>
+             Atras 
+            </Btn>
+          </>
+        </Containerlogin100>
+      </Loginlimiter>
     </>
   );
 };
