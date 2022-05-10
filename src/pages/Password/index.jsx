@@ -67,11 +67,9 @@ export const PasswordR = () => {
           {pageChange(activeIndex)}
           <>
             <Btn style={{position:"absolute", marginTop:" 320px"}} primary="true" className="btn btn-primary" disabled={(activeIndex+1)>=Items.length} onClick={nextSteps}>
-              Siguiente
+              Continuar
             </Btn>
-            <Btn  style={{position:"absolute", marginTop:" 410px"}} className="btn btn-danger" disabled={(activeIndex-1)>=Items.length} onClick={prevSteps}>
-             Atras 
-            </Btn>
+            
           </>
         </Containerlogin100>
       </Loginlimiter>
