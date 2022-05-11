@@ -54,7 +54,7 @@ const validar = (values) => {
         console.log(res);
         toast.showsuccess({
           summary: 'Usuario',
-          detail: `Se creo el usuario ${res.user.username}`,
+          detail: `Se creo el usuario ${values.username}`,
           life: 3000
         });
 

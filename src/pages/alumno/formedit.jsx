@@ -68,26 +68,29 @@ const onsubmit = (values, { setSubmitting }) => {
 
 
 export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmit }) => {
+  const toast = useContext(ToastContext)
+  
   const onsubmit = (values, { setSubmitting }) => {
     const {id}=values;
-  
     Put(`/users/updateUser/${id}` , {
       ...values,
       InitPractice: new Date(values.InitPractice).toISOString(),
       EndPractice: new Date(values.EndPractice).toISOString(),
     }).then(res => {
       console.log(res);
+     
+    }).catch(err => {
+      console.log(err);
+    }).finally(() => {
       toast.showsuccess({
         summary: 'Actualización',
         detail: `Se Actualizo el usuario`,
         life: 3000
       });
-      
-    }).catch(err => {
-      console.log(err);
-    }).finally(() => {
-      setSubmitting(false);
+
       handleSubmit();
+      setSubmitting(false);
+      
     });  
   }
   return (

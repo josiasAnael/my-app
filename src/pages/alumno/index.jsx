@@ -9,6 +9,7 @@ import { FormUserEdit } from "./formedit";
 import { FormUser } from "./form";
 import { useUser } from "../../context/authcontext";
 import {PasswordR} from "../Password";
+import {Loader} from "../../components/Loader";
 
 const initialValues = {
   id: "",
@@ -166,7 +167,7 @@ export const Students = () => {
                 ></Column>
               </DataTable>
             ) : (
-              <h1>Cargando...</h1>
+              <Loader/>
             )}
           </div>
         </div>

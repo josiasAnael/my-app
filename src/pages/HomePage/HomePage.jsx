@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import { useParams } from "react-router-dom";
 import "../HomePage/Homepage.css";
 import DropFileInput from "../../components/file_drop/";
@@ -11,6 +11,8 @@ import { Loader } from "../../components/loader";
 import { useUser } from "../../context/authcontext";
 import { useDocument } from "../../context/documentcontext";
 const { uploadFile } = http;
+import { ToastContext } from '../../context/toastContext.jsx';
+
 
 const datos = {
   fileopening: "DATOS PARA APERTURAR EXPEDIENTE",
@@ -24,10 +26,13 @@ const datos = {
   collegetitle: "COPIA DE TITULO DE COLEGIO",
   acceptanceletter: "CARTA DE ACEPTACION DE PRÁCTICA",
 };
+
 let data = [];
 export const HomePage = () => {
   //obtener el documento para enviarlo
   const [sending, setSending] = useState(false);
+  const toast = useContext(ToastContext)
+
 
   let { id } = useParams();
 
@@ -57,7 +62,13 @@ export const HomePage = () => {
       formData.append("name", item.name);
       let res = await uploadFile("/upload", formData);
       values.push(res);
+
     }
+    toast.showsuccess({
+      summary: 'Exito',
+      detail: `Se han subido los archivos`,
+      life: 3000
+    });
     console.table(values);
     setSending(false);
     data = [];
