@@ -45,11 +45,7 @@ export const Sidebar = () => {
     });
   };
   const linksArray =isadmin? [
-    {
-      label: "Graficas",
-      icon: <MdOutlineAnalytics />,
-      to: "/statistics",
-    },
+
     {
       label: "Alumnos",
       icon: <BsPeople />,
@@ -71,6 +67,11 @@ export const Sidebar = () => {
       label: "Perfil",
       icon: <BsPersonFill />,
       to: "/perfil",
+    },
+    {
+      label: "Graficas",
+      icon: <MdOutlineAnalytics />,
+      to: "/statistics",
     },
   ];
   return (

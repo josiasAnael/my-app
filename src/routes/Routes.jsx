@@ -36,7 +36,7 @@ const RoutesAPP = () => {
           <Route
             path="statistics"
             element={
-              <RequireAuth isAdmin>
+              <RequireAuth>
                 <Dashboard />
               </RequireAuth>
             }

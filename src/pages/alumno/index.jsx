@@ -7,6 +7,7 @@ import { Split } from "../../components/Layout/styles/Split";
 import { useCustomer } from "../../context/customerContext";
 import { FormUserEdit } from "./formedit";
 import { FormUser } from "./form";
+import {PasswordR} from "../Password";
 
 const initialValues = {
   id: "",
@@ -159,13 +160,14 @@ export const Students = () => {
                         </Link>
 
                         {/*boton recuperar contraseña*/}
-                        <button
-                          type="button"
+                        <Link
+                          to={"/changepassword/"}
+                          
                           className="btn btn-info ml-2"
                           onClick={() => {}}
                         >
                           Recuperar contraseña
-                        </button>
+                        </Link>
                       </>
                     );
                   }}

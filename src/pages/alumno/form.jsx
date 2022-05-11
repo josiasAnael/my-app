@@ -1,8 +1,12 @@
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext } from "react";
 import { ErrorInput } from "./custonError";
 import http from "../../services/serviceHttp";
+
+import { ToastContext } from '../../context/toastContext.jsx';
+
+
 const {Post}=http;
 const validar = (values) => {
     let errors = {};
@@ -42,11 +46,18 @@ const validar = (values) => {
   
   
   export const FormUser = ({initialValues,isedit,setValues,handleSubmit }) => {
-    
+    const toast = useContext(ToastContext)
+
     const onSubmit = (values,{ setSubmitting }) => {
       console.log(values);
       Post("/users/createUser",values).then(res=>{
         console.log(res);
+        toast.showsuccess({
+          summary: 'Usuario',
+          detail: `Se creo el usuario ${res.user.username}`,
+          life: 3000
+        });
+
       }).catch(err=>{
         console.log(err);
       }).finally(()=>{

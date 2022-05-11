@@ -72,7 +72,11 @@ export const LoginC = () => {
                                     <compontL.Imput_Label Imput_Label> Contraseña:</compontL.Imput_Label>
                                     <compontL.Input100 Input100  type="password" name="password" id="floatingPassword" placeholder=""/>
                                 </compontL.Wrap_input101>
+                                
+                                <div style={{paddingTop: "1em", textAlign:"center",}}>
                                 <Link to='/changepassword'>Recuperar Contraseña</Link>
+                                </div>
+
                             <Loginbt/>                           
                             </compontL.Login100_form>
                 </compontL.Containerlogin100>

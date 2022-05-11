@@ -43,7 +43,7 @@ export const PasswordR = () => {
     setCode,
     setEmail,
     setPassword,
-    setConfirmPassword
+    setConfirmPassword,
   } = usePass();
 
   const pageChange = (index) => {
@@ -51,7 +51,12 @@ export const PasswordR = () => {
       case 1:
         return <StepsTwo setCode={setCode} />;
       case 2:
-        return <StepsThree setPassword={setPassword} setConfirmPassword={setConfirmPassword} />;
+        return (
+          <StepsThree
+            setPassword={setPassword}
+            setConfirmPassword={setConfirmPassword}
+          />
+        );
       default:
         return <StepsOne setEmail={setEmail} />;
     }
@@ -80,7 +85,6 @@ export const PasswordR = () => {
               readOnly={true}
               style={{ paddingBottom: "1.5em", color: "#2e18d4" }}
             />
-
             {pageChange(activeIndex)}
             <>
               <Btn

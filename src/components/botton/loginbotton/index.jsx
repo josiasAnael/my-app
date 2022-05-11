@@ -4,7 +4,7 @@ export const Loginbt = () => {
  
     return (
             <Container100_btn>
-                <Btn primary="true">
+                <Btn primary="true" style={{marginTop: "30px"}}>
                     Inicio Sesion
                 </Btn>
             

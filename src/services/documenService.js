@@ -19,7 +19,13 @@ export const getDocument = (url) => {
 }
 
 export const getDocumentById = (id) => {
-    return Get(`/documents/${id}`)
+    return Get(`/documents/${id}`).then(res => {
+        return res;
+    }
+    ).catch(err => {
+        console.log(err);
+    }
+    )
 }
 
 export const updateDocument = (data) => {

@@ -1,8 +1,10 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import React, { useState } from "react";
-
+import React, { useState,useContext } from "react";
 import { ErrorInput } from "./custonError";
 import { useCustomer } from "../../context/customerContext";
+
+import { ToastContext } from '../../context/toastContext.jsx';
+
 import http from "../../services/serviceHttp";
 const {Put}=http;
 const validar = (values) => {
@@ -43,6 +45,7 @@ const validar = (values) => {
 
 
 const onsubmit = (values, { setSubmitting }) => {
+  const toast = useContext(ToastContext)
   const {id}=values;
 
   Put(`/users/updateUser/${id}` , {
@@ -50,6 +53,11 @@ const onsubmit = (values, { setSubmitting }) => {
     InitPractice: new Date(values.InitPractice).toISOString(),
     EndPractice: new Date(values.EndPractice).toISOString(),
   }).then(res => {
+    toast.showsuccess({
+      summary: 'Actualización',
+      detail: `Se Actualizo el usuario`,
+      life: 3000
+    });
     console.log(res);
   }).catch(err => {
     console.log(err);
@@ -69,6 +77,12 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
       EndPractice: new Date(values.EndPractice).toISOString(),
     }).then(res => {
       console.log(res);
+      toast.showsuccess({
+        summary: 'Actualización',
+        detail: `Se Actualizo el usuario`,
+        life: 3000
+      });
+      
     }).catch(err => {
       console.log(err);
     }).finally(() => {
