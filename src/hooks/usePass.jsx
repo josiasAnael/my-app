@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ToastContext } from "../context/toastContext";
+import http from "../services/serviceHttp";
+const { Post, Put } = http;
 
 export const usePass = () => {
   const toas = useContext(ToastContext);
@@ -11,11 +13,13 @@ export const usePass = () => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [idUser, setIdUser] = useState("");
   const handleClick = (callback, detail) => {
     setIsActive(false);
     setButton("Enviando...");
     callback
       .then((res) => {
+        if (!res) throw new Error("Algo salio mal");
         toas.showsuccess({
           summary: "Exito",
           detail,
@@ -23,10 +27,10 @@ export const usePass = () => {
         });
         nextSteps();
       })
-      .catch(() => {
+      .catch((err) => {
         toas.showerror({
           summary: "Error",
-          detail: "Verifique su conexión a internet",
+          detail: err.message,
           life: 3000,
         });
       })
@@ -49,19 +53,17 @@ export const usePass = () => {
       detail: "Espere un momento",
       life: 3000,
     });
-    handleClick(Promise.resolve("Se ha enviado el correo."), "Correo enviado");
+    handleClick(Post("/users/sendCode", { email }), "Correo enviado");
   };
 
-  
   const sendCode = () => {
     if (code === "") {
-        toas.showerror({
-            summary: "Error",
-            detail: "Ingrese un código",
-            life: 3000,
-
-        });
-        return;
+      toas.showerror({
+        summary: "Error",
+        detail: "Ingrese un código",
+        life: 3000,
+      });
+      return;
     }
 
     toas.showinfo({
@@ -69,33 +71,42 @@ export const usePass = () => {
       detail: "Espere un momento",
       life: 3000,
     });
-    handleClick(Promise.resolve("El codigo es correcto"), "Codigo Correcto");
+    handleClick(
+      Post("/users/verifyCode", { email, code }).then((res) => {
+        if (!res) throw new Error("Verifique su código");
+        const { code, id } = res;
+        setCode(code);
+        setIdUser(id);
+        return res;
+      }),
+      "Codigo Correcto"
+    );
   };
   const changePassword = () => {
+    console.log("idUser", idUser);
     if (password === "") {
-        toas.showerror({
-            summary: "Error",
+      toas.showerror({
+        summary: "Error",
         detail: "Ingrese una contraseña",
-            life: 3000,
-
-        });
-        return;
+        life: 3000,
+      });
+      return;
     }
     if (confirmPassword === "") {
-        toas.showerror({
-            summary: "Error",
-            detail: "Ingrese de nuevo la contraseña",
-            life: 3000,
-        });
-        return;
+      toas.showerror({
+        summary: "Error",
+        detail: "Ingrese de nuevo la contraseña",
+        life: 3000,
+      });
+      return;
     }
     if (password !== confirmPassword) {
-        toas.showerror({
-            summary: "Error",
-            detail: "Las contraseñas no coinciden",
-            life: 3000,
-        });
-        return;
+      toas.showerror({
+        summary: "Error",
+        detail: "Las contraseñas no coinciden",
+        life: 3000,
+      });
+      return;
     }
     toas.showinfo({
       summary: "Cambiando contraseña",
@@ -103,10 +114,13 @@ export const usePass = () => {
       life: 3000,
     });
     handleClick(
-      Promise.resolve("Cambiada con Exito").then((res) => {
-        setIsSuccess(true);
-        return res;
-      }),
+      Put(`/users/updatePassword/${idUser}`, { email, code, password }).then(
+        (res) => {
+          if (!res) throw new Error("Algo salio mal");
+          setIsSuccess(true);
+          return res;
+        }
+      ),
       "Contraseña Cambiada"
     );
   };
