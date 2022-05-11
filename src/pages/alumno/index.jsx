@@ -7,6 +7,7 @@ import { Split } from "../../components/Layout/styles/Split";
 import { useCustomer } from "../../context/customerContext";
 import { FormUserEdit } from "./formedit";
 import { FormUser } from "./form";
+import { useUser } from "../../context/authcontext";
 import {PasswordR} from "../Password";
 
 const initialValues = {
@@ -25,7 +26,7 @@ const initialValues = {
 
 export const Students = () => {
   const { loading, customers, handleUpdate } = useCustomer();
-
+  const { isadmin } = useUser();
   const [isEdit, setisEdit] = useState(false);
   const [values, setValues] = useState(initialValues);
 
@@ -159,15 +160,6 @@ export const Students = () => {
                           Ver
                         </Link>
 
-                        {/*boton recuperar contraseña*/}
-                        <Link
-                          to={"/changepassword/"}
-                          
-                          className="btn btn-info ml-2"
-                          onClick={() => {}}
-                        >
-                          Recuperar contraseña
-                        </Link>
                       </>
                     );
                   }}

@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Line } from '@ant-design/charts'
 
-import { useParams } from "react-router-dom";
 import { useDocument } from "../../context/documentcontext";
 
 export const Dashboard = () => {
+  
     
-    let { id } = useParams();
-    const { document, loading,setId } = useDocument(id);
-    console.log('document', document)
-
-    const data=[
-        {pdf: "studentidentity", porcentaje: 80},
-        {pdf: "witnessidentityone", porcentaje: 80},
-        {pdf: "witnessidentitytwo", porcentaje: 100},
-        {pdf: "collegetitle", porcentaje: 80},
-        {pdf: "acceptanceletter", porcentaje: 10},
-        {pdf: "fileopening", porcentaje: 100},
-        {pdf: "residentialrecord", porcentaje: 100},    
-        {pdf: "practicalrequest", porcentaje: 100},
-        {pdf: "revicionControl", porcentaje: 100},
-        {pdf: "monographguide", porcentaje: 100},
-    ]
+    const { documentDash , loading} = useDocument('1');
 
     const Configuration ={
-        data,
+        data:documentDash ,
         title: {
             visible: true,
             text: 'Porcentaje de avance de los proyectos'
@@ -53,8 +38,7 @@ export const Dashboard = () => {
         
             <br>
             </br>
-            
-            <Line {...Configuration} />
+            {loading ? <h1>Cargando...</h1> : <Line {...Configuration} />}
         </form>
 
 );

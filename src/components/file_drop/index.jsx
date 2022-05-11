@@ -138,7 +138,7 @@ const ViewStudent = ({ onFileChange, isUploaded, data,name }) => {
         <>
           <div className="drop-file-preview">
             <p>{dataDocument.feedback}</p>
-            <p>Estdao: {formatstate(dataDocument.status)}</p>
+            <p>Estado: {formatstate(dataDocument.status)}</p>
           </div>
         </>
       ) : (

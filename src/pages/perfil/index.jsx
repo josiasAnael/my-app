@@ -14,7 +14,7 @@ import { useUser } from '../../context/authcontext';
 
 export const Perfil = () => {
     
-    const {user, setUser} = useUser();
+    const {user, setUser,isadmin} = useUser();
     console.log('user', user);
     let data = {
         accountnumber: user.accountnumber,
@@ -115,7 +115,7 @@ export const Perfil = () => {
             
           </div>
         </div>
-
+        {!isadmin ? (
         <div className="form-group">
           <label htmlFor="carrera" style={{ fontSize: "'Roboto', sans-serif" }}>
             Carrera:{" "}
@@ -132,29 +132,40 @@ export const Perfil = () => {
             />
           </div>
         </div>
+        ) : null}
 
-        <div className="row">
-          <div className="col-6">
-            <div className="form-group">
-              <label
-                htmlFor="email"
-                style={{ fontSize: "'Roboto', sans-serif" }}
-              >
-                Inicio de la Practica:{" "}
-              </label>
-              <div className="p-inputgroup">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-calendar-plus"></i>
-                </span>
-                <InputText placeholder="" 
-                name="InitPractice"
-                value={data.InitPractice}
-                disabled
-                />
+        
+            <div className="row">
+            {!isadmin ? (
+            <>
+            <div className="col-6">
+              <div className="form-group">
+                <label
+                  htmlFor="email"
+                  style={{ fontSize: "'Roboto', sans-serif" }}
+                >
+                  Inicio de la Practica:{" "}
+                </label>
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-calendar-plus"></i>
+                  </span>
+                  <InputText placeholder="" 
+                  name="InitPractice"
+                  value={data.InitPractice}
+                  disabled
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          
+            </>
+        
+        
+          ) : (
+            null
+          )}
+        
+          {!isadmin ? (
           <div className="col-6">
             <div className="form-group">
               <label
@@ -176,6 +187,10 @@ export const Perfil = () => {
               </div>
             </div>
           </div>
+        
+        ) : (
+          null
+        )}
         </div>
 
         {/*<div className="form-group text-center ">
