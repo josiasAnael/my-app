@@ -1,0 +1,11 @@
+.p-steps {
+    width: 400px;
+}
+.p-steps .p-steps-item.p-highlight .p-steps-title{
+    color: #2e18d4;
+}
+.p-steps-item.p-steps-current .p-menuitem-link{
+    padding: 12px;
+    box-shadow:0 0 20px 0 rgba(0,0,0,0.2),0 5px 5px 0 rgba(25,0,255,0.24);
+    border-radius: 5px;
+}

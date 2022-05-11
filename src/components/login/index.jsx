@@ -3,16 +3,14 @@ import  {Loginbt} from '../botton/loginbotton'
 import { login } from '../../services/authService.js';
 
 import {useUser} from '../../context/authcontext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ToastContext } from '../../context/toastContext.jsx';
 
 export const LoginC = () => {
     let navigate = useNavigate();
     const {loading,token,setUser} = useUser();
-
     const toast = useContext(ToastContext)
-
     const onsubmit = (e) => {
         e.preventDefault();
         let form = e.target;
@@ -74,6 +72,7 @@ export const LoginC = () => {
                                     <compontL.Imput_Label Imput_Label> Contraseña:</compontL.Imput_Label>
                                     <compontL.Input100 Input100  type="password" name="password" id="floatingPassword" placeholder=""/>
                                 </compontL.Wrap_input101>
+                                <Link to='/changepassword'>Recuperar Contraseña</Link>
                             <Loginbt/>                           
                             </compontL.Login100_form>
                 </compontL.Containerlogin100>

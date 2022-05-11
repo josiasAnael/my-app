@@ -1,6 +1,5 @@
 import styled , { css } from 'styled-components'
 
-
 export const Loginlimiter= styled.div`
 ${({limiter})=> limiter && css`
   width: 100%;
