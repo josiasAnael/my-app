@@ -3,8 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import React, { useEffect, useState ,useContext } from "react";
 import { ErrorInput } from "./custonError";
 import http from "../../services/serviceHttp";
-
 import { ToastContext } from '../../context/toastContext.jsx';
+
 
 
 const {Post}=http;
@@ -16,9 +16,15 @@ const validar = (values) => {
     if (!values.username) {                                                                                                                                                            
       errors.username = "El nombre es requerido";
     }
+    // ingrese solo numeros
+    
     // valirar si la identidad es valido
     if (!values.accountNumber) {
       errors.accountNumber = "La identidad es requerida";
+    }
+    //ingrese solo numeros
+    else if (!/^[0-9]*$/.test(values.accountNumber)) {
+      errors.accountNumber = "La identidad debe ser un número";
     }
     // valirar si la contraseña es valido
     if (!values.password) {
@@ -108,7 +114,7 @@ const validar = (values) => {
                 <div className="form-group">
                   <label htmlFor="identity" style={{fontSize:"'Roboto', sans-serif" }}>Identidad</label>
                   <Field
-                    type="text"
+                    type="number"
                     name="accountNumber"
                     placeholder="Identidad"
                     className="form-control input-sm"

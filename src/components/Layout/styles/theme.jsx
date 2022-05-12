@@ -1,10 +1,11 @@
 export const lightTheme = {
     bg: "rgb(0 86 179)",
     bgAlpha: "rgba(250,250,250,.3)",
-    bg2: "rgb(245,245,245)",
+    bg2: "rgb(245, 245, 245)",
     bg3: "rgb(230,230,230)",
     text: "rgb(45,45,45)",
     primary: "rgb(235, 128, 52)",
+    
 };
 export const darkTheme = {
     bg: "rgb(15,15,15)",

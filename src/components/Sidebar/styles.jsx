@@ -38,7 +38,7 @@ export const SLogo = styled.div`
 export const SDivider = styled.div`
     height: 1px;
     width: 100%;
-    background: ${({ theme }) => theme.bg3};
+    background: ${({ theme }) => theme.text};
     margin: ${v.lgSpacing} 0;
 `;
 
@@ -61,6 +61,8 @@ export const SLink = styled(Link)`
     padding: calc(${v.smSpacing} - 2px) 0;
     width: ${({ isOpen }) => (!isOpen ? `100px` : `360px`)};
     transition: 0.8s ease;
+    
+    
 `;
 
 export const SLinkIcon = styled.div`

@@ -99,6 +99,8 @@ export const Sidebar = () => {
           ))}
 
           <SDivider />
+
+
           {linksArray.map(({ icon, label, to }) => (
             <SLinkContainer key={label} isActive={location.pathname === to}>
               <SLink
@@ -115,6 +117,7 @@ export const Sidebar = () => {
             </SLinkContainer>
           ))}
           <SDivider />
+          
           {secondaryLinksArray.map(({ icon, label }) => (
             <SLinkContainer key={label}>
               <SLink

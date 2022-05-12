@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "@ant-design/charts";
-
+import { InputText } from "primereact/inputtext";
 import { useDocument } from "../../context/documentcontext";
 
 export const Dashboard = () => {
@@ -42,6 +42,30 @@ export const Dashboard = () => {
           </h2>
         </div>
       </div>
+    <div className="row m-3">
+      <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+                <span className="p-inputgroup-addon">100%</span>
+                <InputText placeholder="Aprobado" disabled >
+                </ InputText>
+            </div>
+        </div>
+        <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+                <span className="p-inputgroup-addon">25%</span>
+                <InputText placeholder="Pendiente" disabled >
+                </ InputText>
+            </div>
+        </div>
+        <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+                <span className="p-inputgroup-addon">0%</span>
+                <InputText placeholder="Descartado" disabled >
+                </ InputText>
+            </div>
+        </div>
+        </div>
+
       <form action="#" className="p-3 form">
         <br></br>
         {loading ? <h1>Cargando...</h1> : <Line {...Configuration} />}

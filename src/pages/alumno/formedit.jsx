@@ -17,6 +17,9 @@ const validar = (values) => {
   if (!values.accountNumber) {
     errors.accountNumber = "La identidad es requerida";
   }
+  else if (!/^[0-9]*$/.test(values.accountNumber)) {
+    errors.accountNumber = "La identidad debe ser un número";
+  }
   if (!values.email) {
     errors.email = "El email es requerido";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -151,7 +154,7 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
                 Identidad
               </label>
               <Field
-                type="text"
+                type="number"
                 name="accountNumber"
                 placeholder="Identidad"
                 className="form-control input-sm"
