@@ -4,9 +4,6 @@ import React, { useEffect, useState ,useContext } from "react";
 import { ErrorInput } from "./custonError";
 import http from "../../services/serviceHttp";
 import { ToastContext } from '../../context/toastContext.jsx';
-
-
-
 const {Post}=http;
 const validar = (values) => {
     let errors = {};
@@ -16,7 +13,10 @@ const validar = (values) => {
     if (!values.username) {                                                                                                                                                            
       errors.username = "El nombre es requerido";
     }
-    // ingrese solo numeros
+    // no acepte numeros
+    if (/\d/.test(values.username)) {
+      errors.username = "El nombre no acepta números";
+    }
     
     // valirar si la identidad es valido
     if (!values.accountNumber) {
@@ -90,6 +90,7 @@ const validar = (values) => {
                     name="username"
                     placeholder="Nombre"
                     className="form-control input-sm"
+                    autoComplete="off"
                   />
                   <ErrorMessage
                     name="username"
@@ -104,6 +105,7 @@ const validar = (values) => {
                     name="email"
                     placeholder="Email"
                     className="form-control input-sm"
+                    autoComplete="off"
                   />
                   <ErrorMessage
                     name="email"
@@ -118,7 +120,7 @@ const validar = (values) => {
                     name="accountNumber"
                     placeholder="Identidad"
                     className="form-control input-sm"
-                    
+                    autoComplete="off"
                   />
                   
                   <ErrorMessage
@@ -134,6 +136,7 @@ const validar = (values) => {
                     name="password"
                     placeholder="Contraseña"
                     className="form-control input-sm"
+                    autoComplete="off"
                   />
 
                   <ErrorMessage
@@ -148,6 +151,7 @@ const validar = (values) => {
                     name="confirmPassword"
                     placeholder="Confirmar Contraseña"
                     className="form-control input-sm"
+                    autoComplete="off"
                   />
 
                   <ErrorMessage name="confirmPassword" component={() => (

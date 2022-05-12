@@ -13,10 +13,15 @@ const validar = (values) => {
   if (!values.username) {
     errors.name = "El nombre es requerido";
   }
+  //validar que no acepte numeros
+  if (/\d/.test(values.username)) {
+    errors.name = "El nombre no acepta números";
+  }
   // valirar si la identidad es valido
   if (!values.accountNumber) {
     errors.accountNumber = "La identidad es requerida";
   }
+  //ingrese solo numeros
   else if (!/^[0-9]*$/.test(values.accountNumber)) {
     errors.accountNumber = "La identidad debe ser un número";
   }
@@ -120,6 +125,7 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
                 id="username"
                 placeholder="Nombre"
                 className="form-control input-sm"
+                autoComplete="off"
               />
               <ErrorMessage
                 name="username"
@@ -139,6 +145,7 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
                 name="email"
                 placeholder="Email"
                 className="form-control input-sm"
+                autoComplete="off"
               />
               <ErrorMessage
                 name="email"
@@ -158,6 +165,7 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
                 name="accountNumber"
                 placeholder="Identidad"
                 className="form-control input-sm"
+                autoComplete="off"
               />
 
               <ErrorMessage
@@ -177,6 +185,7 @@ export const FormUserEdit = ({ initialValuesEdit, isedit, setValues, handleSubmi
                 name="career"
                 component="select"
                 className="form-control input-sm"
+                autoComplete="off"
               >
                 <option
                   value=""

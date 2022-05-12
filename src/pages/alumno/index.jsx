@@ -107,7 +107,7 @@ export const Students = () => {
                 <Column
                   field="createdAt"
                   sortable
-                  header="Creado"
+                  header="Inicio de Practica"
                   body={(data) => {
                     let date = Date.parse(data.createdAt);
                     return Intl.DateTimeFormat("es-ES", {
