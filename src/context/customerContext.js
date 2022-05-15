@@ -5,16 +5,18 @@ export const useCustomer=()=>{
     const [customers, setCustomers] = useState([]);
     // loading
     const [loading, setLoading] = useState(false);
-    // updateing
+
     const [update, setUpdate] = useState(false);
     // error
     const [error, setError] = useState(null);
 
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         getCustomer('/users').then(data => {
             setCustomers(data);
+            setData(data);
         }
         ).catch(err => {
             setError(err);
@@ -26,12 +28,22 @@ export const useCustomer=()=>{
     const handleUpdate = () => {
         setUpdate(!update);
     }
+    const filter = (text) => {
+        if (text === '') {
+            setCustomers(data);
+            return ;
+        }
+        setCustomers(data.filter(customer => customer.username.toLowerCase().includes(text.toLowerCase()) || customer.accountnumber.toLowerCase().includes(text.toLowerCase())));  
+    }
+
     return {
         loading,
         error,
         customers,
-        handleUpdate
+        handleUpdate,
+        filter
     }
+   
 }
 
 

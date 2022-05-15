@@ -10,6 +10,7 @@ import { FormUser } from "./form";
 import { useUser } from "../../context/authcontext";
 import {PasswordR} from "../Password";
 import {Loader} from "../../components/Loader";
+import {InputText} from "primereact/inputtext";
 
 const initialValues = {
   id: "",
@@ -26,7 +27,7 @@ const initialValues = {
 };
 
 export const Students = () => {
-  const { loading, customers, handleUpdate } = useCustomer();
+  const { loading, customers, handleUpdate, filter } = useCustomer();
   const { isadmin } = useUser();
   const [isEdit, setisEdit] = useState(false);
   const [values, setValues] = useState(initialValues);
@@ -63,6 +64,17 @@ export const Students = () => {
     setValues(initialValues);
   }
 
+
+
+  //buscador en la tabla de alumnos por nombre de usuario o email o numero de cuenta 
+  const buscador = (e)=> {
+    filter(e.target.value);
+  }
+  
+
+
+
+
   return (
     <>
       <Split>
@@ -88,8 +100,18 @@ export const Students = () => {
             className="col-sm-12 col-md-9 col-xl-9"
             style={{ paddingRight: "20px" }}
           >
-            <h1 style={{ fontSize: "'Roboto', sans-serif" }}>Alumnos</h1>
+            
             {!loading ? (
+               <>
+              
+              <div className="flex justify-content-between align-items-center">
+               <h5 className="m-0">Usuarios</h5>
+               <span className="p-input-icon-left">
+                   <i className="pi pi-search" />
+                   <InputText id="buscar" onChange={buscador} placeholder="Buscador" />
+               </span>
+              </div>
+               
               <DataTable
                 value={customers}
                 responsiveLayout="scroll"
@@ -166,6 +188,7 @@ export const Students = () => {
                   }}
                 ></Column>
               </DataTable>
+              </>
             ) : (
               <Loader/>
             )}

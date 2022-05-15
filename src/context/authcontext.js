@@ -8,6 +8,7 @@ export const useUser=()=>{
         token:data?.token,
         user:data?.user,
         isadmin:data?.user?.roles.name==='admin',
-        setUser:mutate,
+        setUser:mutate
+        
     }
 }
